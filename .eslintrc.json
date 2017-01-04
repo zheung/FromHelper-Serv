@@ -1,0 +1,30 @@
+{
+	"env": {
+		"node": true,
+		"es6": true
+	},
+	"extends": "eslint:recommended",
+	"rules": {
+		"indent": [ 1, "tab" ],
+		"linebreak-style": [ 2, "windows" ],
+		"quotes": [ 2, "single" ],
+		"semi": [ 2, "always" ],
+		"no-unused-vars": [ 1, { "vars": "all", "args": "after-used" } ],
+		"no-console": [ 1 ]
+	},
+	"globals": {
+		"_c": true,
+		"_l": true,
+		"_d": true,
+
+		"fs": true,
+		"path": true,
+		"qs": true,
+
+		"koa": true,
+		"koaRouter": true,
+
+		"CleanCSS": true,
+		"UglifyJS": true
+	}
+}
