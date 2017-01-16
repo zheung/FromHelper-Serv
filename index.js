@@ -19,8 +19,6 @@ module.exports = ($) => {
 
 	let app = koa(), router = koaRouter();
 
-	let time = new Date();
-
 	router.get('/pwd', function*(next) {
 		yield next;
 

@@ -1,7 +1,6 @@
 {
 	"env": {
-		"node": true,
-		"es6": true
+		"browser": true
 	},
 	"extends": "eslint:recommended",
 	"rules": {
@@ -10,11 +9,8 @@
 		"quotes": [ 2, "single" ],
 		"semi": [ 2, "always" ],
 		"no-unused-vars": [ 1, { "vars": "all", "args": "after-used" } ],
-		"no-console": [ 1 ]
+		"no-console": [ 0 ]
 	},
 	"globals": {
-		"_c": true,
-		"_l": true,
-		"_d": true
 	}
 }
