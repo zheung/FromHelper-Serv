@@ -1,0 +1,149 @@
+<!html>
+<html>
+	<head>
+		<title>Aufoll.js</title>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="Content-Language" content="zh-CN">
+		<meta name="keywords" content="Aufoll,自动填表,密码管理	">
+		<meta name="description" content="基于用户脚本与服务器的自动填表工具">
+		<meta name="viewport" content="width=768, initial-scale=1.0">
+
+		<link href="af/css/kq.all.min.css" rel="stylesheet">
+
+		<link href="pub/css/flex.css" rel="stylesheet">
+		<link href="pub/css/small.css" rel="stylesheet">
+		<link href="kq/css/test.css" rel="stylesheet">
+		<link href="kq/css/style.css" rel="stylesheet">
+		<link href="kq/css/color.css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="Frame clrFont flex drr wpn jcs aic wpn">
+			<div class="Main blrBack flex drc jcc aic wpn">
+				<div class="Cards flex drc jcs ais acs wpw">
+					<div class="hide Card flex drc jcs ais acs wpw">
+						<div class="DataBox">
+							<div class="NameBox flex jcc aie"><a class="selable Info sTitle"></a></div>
+							<div class="InfoBox flex drc jca aic">
+								<div>
+									<span class="sJob"></span>&nbsp;&nbsp;
+									<span class="sKind"></span>&nbsp;&nbsp;
+									<span class="sAttr"></span>&nbsp;&nbsp;
+									<span class="sRare"></span>&nbsp;&nbsp;
+									<span class="sCost"></span>C&nbsp;&nbsp;
+									<span class="sStar"></span>
+								</div>
+								<table width="100%" class="clrFont" align="center">
+									<tr>
+										<td width="25%">HP</td><td width="25%" class="sHP"></td>
+										<td width="25%">AD</td><td width="25%" class="sAD"></td>
+									</tr>
+									<tr>
+										<td width="25%">AP</td><td width="25%" class="sAP"></td>
+										<td width="25%">HQ</td><td width="25%" class="sHQ"></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="Pager flex jcb aic">
+					<a class="PagePrev flex jcc aic">上一页</a>
+					<div class="PageCount flex jcc aic">
+						第<span class="Page sPage" contenteditable="true"></span>/&nbsp;<span class="sPageMax"></span>&nbsp;页
+					</div>
+					<a class="PageNext flex jcc aic">下一页</a>
+				</div>
+			</div>
+			<div class="Navi blrNavi">
+				<div class="TabHeader RightNavi flex jca aih wpn">
+					<a class="TabHead RightNavi active flex jcc aic" data-tab="RightNavi" data-page="Basic">表单</a>
+					<a class="TabHead RightNavi flex jcc aic" data-tab="RightNavi" data-page="Config" data-notab>配置</a>
+					<a class="TabHead RightNavi flex jcc aic" data-tab="RightNavi" data-page="About" data-notab>关于</a>
+				</div>
+				<div class="TabItem RightNavi flex drc aic jcs wpw" data-tab="RightNavi" data-page="Basic">
+					<div class="NaviColumn flex jcb aic wpn">
+						<a class="w4 Button" data-z="32">主域名</a>
+						<div class="CondBar2 flex jca aic wpw">
+							<input id="CondName" class="wf Input" type="text" placeholder="关键词"/>
+						</div>
+						<a id="Search" class="w4 Button">搜索</a>
+					</div>
+					<div class="NaviColumn hr flex jcb aic wpw">
+						<div>
+							表单信息
+						</div>
+						<div>
+							<a class="Button" data-tab="Serv" data-func="cn">保存</a>
+							<a class="Button" data-tab="Serv" data-func="cn">重置</a>
+							<a class="Button" data-tab="Serv" data-func="cn">清空</a>
+							<a class="Button" data-tab="Serv" data-func="cn">删除</a>
+						</div>
+					</div>
+					<div class="NaviColumn flex jcb aic wpw">
+						<a class="w4 Toggle" data-cond="job" data-x="s">名称</a>
+						<div class="CondBar flex jca aic wpw">
+							<span contenteditable="true">百度</span>
+						</div>
+					</div>
+					<div class="NaviColumn flex jcb aic wpw">
+						<a class="w4 Toggle" data-cond="job" data-x="s">主域名</a>
+						<div class="CondBar flex jca aic wpw">
+							<span contenteditable="true">baidu.com</span>
+						</div>
+					</div>
+					<div class="NaviColumn flex jcb aic wpw">
+						<a class="w4 Toggle" data-cond="job" data-x="s">子域名</a>
+						<div class="CondBar flex jca aic wpw">
+							<span contenteditable="true">*</span>
+						</div>
+					</div>
+					<div class="NaviColumn flex jcb aic wpw">
+						<a class="w4 Toggle" data-cond="job" data-x="s">主信息</a>
+						<div class="CondBar flex jca aic wpw">
+							<span contenteditable="true">danor</span>
+						</div>
+					</div>
+					<div class="NaviColumn flex jcb aic wpw">
+						<a class="w4 Toggle" data-cond="job" data-x="s">密码</a>
+						<div class="CondBar flex jca aic wpw">
+							<span contenteditable="true">*******</span>
+						</div>
+					</div>
+				</div>
+				<div class="TabItem RightNavi clrFontDark flex drc jcs aic wpw" data-tab="RightNavi" data-page="Config">
+				</div>
+				<div class="TabItem RightNavi flex drr jcc aic wpw" data-tab="RightNavi" data-page="About">
+					<div class="TabItem RightNavi2 clrFontDark fs20 flex drc jcb aic wpw">
+						<div>
+							<span class="fs24 fsb clrFont">A</span>ufoll.js&nbsp;
+						</div>
+						<div>
+							跨<span class="fs24 fsb clrFont">浏览器</span>
+						</div>
+						<div>
+							基于<span class="fs24 fsb clrFont">Userscript</span>
+						</div>
+						<div>
+							自搭建<span class="fs24 fsb clrFont">服务器</span>
+						</div>
+						<div>
+							强迫症患者的
+							<span class="fs24 fsb clrFont">私用型自动填表工具</span>
+						</div>
+						<div>
+							Make&nbsp;by&nbsp;
+							<span class="fs24 fsb clrFont">DanoR</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="Popup"></div>
+
+		<script type="text/javascript" src="pub/js/jquery.min.js"></script>
+		<!--<script type="text/javascript" src="kq/js/kq.all.min.js"></script>-->
+		<script type="text/javascript" src="af/js/kq.js"></script>
+		<script type="text/javascript" src="af/js/init.js"></script>
+	</body>
+</html>

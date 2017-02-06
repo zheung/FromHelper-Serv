@@ -10,28 +10,54 @@
 // ==/UserScript==
 
 if(self == top) { (function() {
-	console.log('Aufoll Go');
+	var debug = true;
 
-	var itr = setInterval(function() {
-		var u = document.querySelector('input.pass-text-input-userName'), p = document.querySelector('input.pass-text-input-password');
+	var qs = function(selector) { return document.querySelector(selector); },
+		log = function(obj) { if(debug) console.log(obj); },
+		nt = function(name) { return name == 'm' ? '主信息' : (name == 'p' ? '密码' : name); };
 
-		if(!u) return;
+	log('Aufoll Go');
 
-		var xhr = new XMLHttpRequest();
+	var xhr = new XMLHttpRequest();
 
-		xhr.onreadystatechange = function() {
-			if(xhr.readyState == 4 && xhr.status == 200) {
-				var r = JSON.parse(xhr.responseText);
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState == 4 && xhr.status == 200) {
+			var r = JSON.parse(xhr.responseText), drs, dls, i, ca;
 
-				u.value = r.u;
-				p.value = r.p;
+			if(r && r.s && r.d) {
+				drs = r.d.r; dls = r.d.l; ca = {};
+
+				for(i in drs)
+					qs(drs[i][2]).value = drs[i][1];
+
+				log('Aufoll Delay Fill Start');
+
+				document.onclick = function() {
+					setTimeout(function() {
+						var e;
+
+						for(i in dls) {
+							if(!ca[i]) {
+								e = qs(dls[i][2]);
+
+								if(e) {
+									ca[i] = true;
+									e.value = dls[i][1];
+									log('Aufoll Delay Fill ' + nt(dls[i][0]) + ' Done');
+								}
+							}
+						}
+
+						if(Object.keys(ca).length == dls.length) {
+							log('Aufoll Delay Fill End');
+							document.onclick = null;
+						}
+					}, 700);
+				};
 			}
-		};
+		}
+	};
 
-		xhr.open('GET', 'http://localhost/fh/pwd?k=danor&s='+location.host, true);
-		xhr.send();
-
-		clearInterval(itr);
-		console.log('FromHelper Done');
-	}, 500);
+	xhr.open('GET', 'https://localhost/af/pwd?c=danor&d='+location.host, true);
+	xhr.send();
 })(); }
