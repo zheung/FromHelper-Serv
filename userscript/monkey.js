@@ -30,34 +30,38 @@ if(self == top) { (function() {
 				for(i in drs)
 					qs(drs[i][2]).value = drs[i][1];
 
-				log('Aufoll Delay Fill Start');
+				log('Aufoll Direct-Fill Done');
 
-				document.onclick = function() {
-					setTimeout(function() {
-						var e;
+				if(dls.length) {
+					log('Aufoll Delay-Fill Gone');
 
-						for(i in dls) {
-							if(!ca[i]) {
-								e = qs(dls[i][2]);
+					document.onclick = function() {
+						setTimeout(function() {
+							var e;
 
-								if(e) {
-									ca[i] = true;
-									e.value = dls[i][1];
-									log('Aufoll Delay Fill ' + nt(dls[i][0]) + ' Done');
+							for(i in dls) {
+								if(!ca[i]) {
+									e = qs(dls[i][2]);
+
+									if(e) {
+										ca[i] = true;
+										e.value = dls[i][1];
+										log('Aufoll Delay-Fill ' + nt(dls[i][0]));
+									}
 								}
 							}
-						}
 
-						if(Object.keys(ca).length == dls.length) {
-							log('Aufoll Delay Fill End');
-							document.onclick = null;
-						}
-					}, 700);
-				};
+							if(Object.keys(ca).length == dls.length) {
+								log('Aufoll Delay-Fill Done');
+								document.onclick = null;
+							}
+						}, 700);
+					};
+				}
 			}
 		}
 	};
 
-	xhr.open('GET', 'https://localhost/af/pwd?c=danor&d='+location.host, true);
+	xhr.open('GET', 'https://danor.top/af/pwd?c=danor&d='+location.host, true);
 	xhr.send();
 })(); }
