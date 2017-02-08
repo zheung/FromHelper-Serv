@@ -2,7 +2,14 @@ module.exports = ($) => {
 	for(let path of $.conf.pathDict)
 		try {
 			let paths = path.split(':');
-			$.dict = paths[0]=='i' ? $.rq(paths[1]) : require(paths[1]);
+
+			if(paths[0] == 'i')
+				$.dict = $.rq(paths[1], true);
+			else if(paths[0] == 'o') {
+				delete require.cache[require.resolve(paths[1])];
+
+				$.dict = require(paths[1]);
+			}
 
 			return;
 		}
