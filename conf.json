@@ -2,8 +2,8 @@
 	"pathServ": "/af",
 
 	"pathDict": [
-		"dict",
-		"~/aufoll.json"
+		"i:dict",
+		"o:~/aufoll.json"
 	],
 
 	"key": "danor"
