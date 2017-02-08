@@ -27,8 +27,8 @@ if(self == top) { (function() {
 			if(r && r.s && r.d) {
 				drs = r.d.r; dls = r.d.l; ca = {};
 
-				for(i in drs)
-					qs(drs[i][2]).value = drs[i][1];
+				for(i in drs) if(drs.hasOwnProperty(i))
+						qs(drs[i][2]).value = drs[i][1];
 
 				log('Aufoll Direct-Fill Done');
 
@@ -39,7 +39,7 @@ if(self == top) { (function() {
 						setTimeout(function() {
 							var e;
 
-							for(i in dls) {
+							for(i in dls) { if(dls.hasOwnProperty(i))
 								if(!ca[i]) {
 									e = qs(dls[i][2]);
 
