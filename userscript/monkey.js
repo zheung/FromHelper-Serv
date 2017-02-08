@@ -25,10 +25,10 @@ if(self == top) { (function() {
 			var r = JSON.parse(xhr.responseText), drs, dls, i, ca;
 
 			if(r && r.s && r.d) {
-				drs = r.d.r; dls = r.d.l; ca = {};
+				drs = r.d.r || []; dls = r.d.l || []; ca = {};
 
 				for(i in drs) if(drs.hasOwnProperty(i))
-						qs(drs[i][2]).value = drs[i][1];
+					qs(drs[i][2]).value = drs[i][1];
 
 				log('Aufoll Direct-Fill Done');
 
