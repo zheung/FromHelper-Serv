@@ -4,7 +4,10 @@ module.exports = ($) => {
 			let paths = path.split(':');
 			$.dict = paths[0]=='i' ? $.rq(paths[1]) : require(paths[1]);
 
-			break;
+			return;
 		}
 		catch(e) { continue; }
+
+	$.dict = [];
+	_l('warn: af record is empty');
 };

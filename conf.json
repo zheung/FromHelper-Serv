@@ -3,7 +3,7 @@
 
 	"pathDict": [
 		"i:dict",
-		"o:~/aufoll.json"
+		"o:/root/aufoll.json"
 	],
 
 	"key": "danor"
