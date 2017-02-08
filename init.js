@@ -9,5 +9,5 @@ module.exports = ($) => {
 		catch(e) { continue; }
 
 	$.dict = [];
-	_l('warn: af record is empty');
+	_l('warn: af dict is empty');
 };

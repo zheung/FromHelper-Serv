@@ -22,6 +22,25 @@ module.exports = ($) => {
 
 	app.use(require('koa-static')($.pa('asset')));
 
+	router.get('/up', function*(next) {
+		yield next;
+
+		for(let path of $.conf.pathDict)
+			try {
+				let paths = path.split(':');
+				$.dict = paths[0]=='i' ? $.rq(paths[1]) : require(paths[1]);
+
+				this.body = 'dict updated';
+
+				return;
+			}
+			catch(e) { continue; }
+
+		$.dict = [];
+		_l('warn: af dict is empty');
+		this.body = 'warn: new dict is empty';
+	});
+
 	router.get('/pwd', function*(next) {
 		yield next;
 
