@@ -1,3 +1,9 @@
 module.exports = ($) => {
-	$.dict = $.rq('dict');
+	for(let path of $.conf.pathDict)
+		try {
+			$.dict = $.rq(path);
+
+			break;
+		}
+		catch(e) { continue; }
 };

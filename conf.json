@@ -1,5 +1,10 @@
 {
 	"pathServ": "/af",
 
+	"pathDict": [
+		"dict",
+		"~/aufoll.json"
+	],
+
 	"key": "danor"
 }
