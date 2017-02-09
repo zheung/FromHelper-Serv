@@ -29,7 +29,7 @@ module.exports = ($) => {
 	else if(paths[0] == 'o')
 		pathWatch = paths[1];
 
-	fs.watch(pathWatch, () => {
+	fs.watch(pathWatch, { persistent: true }, () => {
 		_l('af dict changed');
 		try {
 			if(paths[0] == 'i')
