@@ -30,6 +30,7 @@ module.exports = ($) => {
 		pathWatch = paths[1];
 
 	fs.watch(pathWatch, () => {
+		_l('af dict changed');
 		try {
 			if(paths[0] == 'i')
 				$.dict = $.rq(paths[1], true);
