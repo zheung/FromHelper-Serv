@@ -11,6 +11,8 @@ module.exports = ($) => {
 				$.dict = require(paths[1]);
 			}
 
+			$.pathNow = path;
+
 			return;
 		}
 		catch(e) { continue; }
