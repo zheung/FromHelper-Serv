@@ -2,7 +2,7 @@
 	"pathServ": "/af",
 
 	"pathDict": [
-		"i:dict.json",
+		"i:aufoll.json",
 		"o:/root/aufoll.json"
 	],
 

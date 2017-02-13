@@ -14,8 +14,29 @@ let isIP = (host) => {
 
 	return false;
 };
-
 module.exports = ($) => {
+	global.up = () => {
+		for(let path of $.conf.pathDict)
+			try {
+				let paths = path.split(':');
+
+				if(paths[0] == 'i')
+					$.dict = $.rq(paths[1], true);
+				else if(paths[0] == 'o') {
+					delete require.cache[require.resolve(paths[1])];
+
+					$.dict = require(paths[1]);
+				}
+
+				this.body = 'dict updated';
+
+				return 'updated';
+			}
+			catch(e) { continue; }
+
+		$.dict = [];
+		_l('warn: af dict is empty');
+	};
 	$.rq('init');
 
 	let app = koa(), router = koaRouter();
