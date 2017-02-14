@@ -8,65 +8,23 @@ let isIP = (host) => {
 		(0 < ~~match[1] && ~~match[1] < 255) &&
 		(0 < ~~match[2] && ~~match[2] < 255) &&
 		(0 < ~~match[3] && ~~match[3] < 255) &&
-		(1 < ~~match[4] && ~~match[4] < 65535)
+		(!match[4] || (1 < ~~match[4] && ~~match[4] < 65535))
 	)
 		return true;
 
 	return false;
 };
 module.exports = ($) => {
-	global.up = () => {
-		for(let path of $.conf.pathDict)
-			try {
-				let paths = path.split(':');
-
-				if(paths[0] == 'i')
-					$.dict = $.rq(paths[1], true);
-				else if(paths[0] == 'o') {
-					delete require.cache[require.resolve(paths[1])];
-
-					$.dict = require(paths[1]);
-				}
-
-				this.body = 'dict updated';
-
-				return 'updated';
-			}
-			catch(e) { continue; }
-
-		$.dict = [];
-		_l('warn: af dict is empty');
-	};
 	$.rq('init');
 
-	let app = koa(), router = koaRouter();
+	let app = koa(), router = koaRouter(), URL = require('url');
 
 	app.use(require('koa-static')($.pa('asset')));
 
 	router.get('/up', function*(next) {
 		yield next;
 
-		for(let path of $.conf.pathDict)
-			try {
-				let paths = path.split(':');
-
-				if(paths[0] == 'i')
-					$.dict = $.rq(paths[1], true);
-				else if(paths[0] == 'o') {
-					delete require.cache[require.resolve(paths[1])];
-
-					$.dict = require(paths[1]);
-				}
-
-				this.body = 'dict updated';
-
-				return;
-			}
-			catch(e) { continue; }
-
-		$.dict = [];
-		_l('warn: af dict is empty');
-		this.body = 'warn: new dict is empty';
+		this.body = global.upDict();
 	});
 
 	router.get('/pwd', function*(next) {
@@ -79,39 +37,59 @@ module.exports = ($) => {
 
 		if(!query.c || !query.d)
 			this.body = { s: false, r: 'param lack' };
-		else if(isIP(query.d)) {
-			let record = $.dict[query.d];
+		else if(query.d) {
+			let url = URL.parse(new Buffer(query.d, 'base64').toString(), true);
 
-			if(record) {
-				this.body = {
-					s: true,
-					d: record
-				};
-			}
-			else
-				this.body = { s: false, r: 'record not found' };
-		}
-		else {
-			let domain = query.d.split('.').reverse();
-			domain.unshift([domain.shift(), domain.shift()].reverse().join('.'));
+			if(isIP(url.host)) {
+				let record = $.dict.idx[url.host];
 
-			if($.conf.key == query.c) {
-				if($.dict[domain[0]]) {
-					let record = $.dict[domain[0]][domain[1]] || $.dict[domain[0]]['*'];
+				if(record) {
 
-					if(record)
-						this.body = {
-							s: true,
-							d: record
-						};
-					else
-						this.body = { s: false, r: 'record not found' };
+					for(let ruleArr of record.rule) {
+						let isMatch = false;
+
+						for(let rule of ruleArr)
+							if(rule.type == 't' && rule.text == '*') {
+								isMatch = true;
+
+								break;
+							}
+
+						if(isMatch) {
+							this.body = {};
+						}
+					}
+
+					this.body = {
+						s: true,
+						d: record
+					};
 				}
 				else
 					this.body = { s: false, r: 'record not found' };
 			}
-			else
-				this.body = { s: false, r: 'key incorrect' };
+			else {
+				let domain = query.d.split('.').reverse();
+				domain.unshift([domain.shift(), domain.shift()].reverse().join('.'));
+
+				if($.conf.key == query.c) {
+					if($.dict[domain[0]]) {
+						let record = $.dict[domain[0]][domain[1]] || $.dict[domain[0]]['*'];
+
+						if(record)
+							this.body = {
+								s: true,
+								d: record
+							};
+						else
+							this.body = { s: false, r: 'record not found' };
+					}
+					else
+						this.body = { s: false, r: 'record not found' };
+				}
+				else
+					this.body = { s: false, r: 'key incorrect' };
+			}
 		}
 	});
 
