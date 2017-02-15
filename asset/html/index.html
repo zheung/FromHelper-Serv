@@ -11,6 +11,7 @@
 
 		<!--<link href="af/css/kq.all.min.css" rel="stylesheet">-->
 
+		<link href="pub/css/fa.min.css" rel="stylesheet">
 		<link href="pub/css/flex.css" rel="stylesheet">
 		<link href="pub/css/small.css" rel="stylesheet">
 		<link href="af/css/test.css" rel="stylesheet">
@@ -20,30 +21,20 @@
 	<body>
 		<div class="Frame clrFont flex drr wpn jcs aic wpn">
 			<div class="Main blrBack flex drc jcc aic wpn">
-				<div class="Cards flex drc jcs ais acs wpw">
-					<div class="hide Card flex drc jcs ais acs wpw">
-						<div class="DataBox">
-							<div class="NameBox flex jcc aie"><a class="selable Info sTitle"></a></div>
-							<div class="InfoBox flex drc jca aic">
-								<div>
-									<span class="sJob"></span>&nbsp;&nbsp;
-									<span class="sKind"></span>&nbsp;&nbsp;
-									<span class="sAttr"></span>&nbsp;&nbsp;
-									<span class="sRare"></span>&nbsp;&nbsp;
-									<span class="sCost"></span>C&nbsp;&nbsp;
-									<span class="sStar"></span>
-								</div>
-								<table width="100%" class="clrFont" align="center">
-									<tr>
-										<td width="25%">HP</td><td width="25%" class="sHP"></td>
-										<td width="25%">AD</td><td width="25%" class="sAD"></td>
-									</tr>
-									<tr>
-										<td width="25%">AP</td><td width="25%" class="sAP"></td>
-										<td width="25%">HQ</td><td width="25%" class="sHQ"></td>
-									</tr>
-								</table>
-							</div>
+				<div class="Records flex drr jca aic aca wpw">
+					<div class="Record flex drr jcs ais acc wpw">
+						<div class="Detail flex drr jcs aic acc">
+							<div class="Icon flex jcc aic acc"><i class="fa fa-address-card-o"></i></div>
+							<span class="Show sName"></span>
+							<div class="Icon flex jcc aic acc"><a class="fa fa-link sLink" target="_blank"></a></div>
+						</div>
+						<div class="Detail flex drr jcs aic acc">
+							<div class="Icon flex jcc aic acc"><i class="fa fa-user-o"></i></div>
+							<span class="Show sMain"></span>
+						</div>
+						<div class="Detail flex drr jcs aic acc">
+							<div class="Icon flex jcc aic acc"><i class="fa fa-unlock-alt"></i></div>
+							<span class="Show sPass">**************</span>
 						</div>
 					</div>
 				</div>
@@ -141,9 +132,13 @@
 		</div>
 		<div class="Popup"></div>
 
+		<script type="text/javascript">window.d = { v: {}, e: {}, t: {} };</script>
+
 		<script type="text/javascript" src="pub/js/jquery.min.js"></script>
-		<!--<script type="text/javascript" src="kq/js/kq.all.min.js"></script>-->
-		<script type="text/javascript" src="af/js/kq.js"></script>
+		<script type="text/javascript" src="af/js/pre.js"></script>
+		<script type="text/javascript" src="af/js/tool/comm.js"></script>
 		<script type="text/javascript" src="af/js/init.js"></script>
+		<!--<script type="text/javascript" src="af/js/all.min.js"></script>
+		<script type="text/javascript" src="af/js/kq.js"></script>-->
 	</body>
 </html>

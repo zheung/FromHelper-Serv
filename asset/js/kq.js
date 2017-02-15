@@ -1,24 +1,5 @@
 (function() {
-	// Clone 5 Info Div
-	var cCards = $('.Cards'), cCard = cCards.children('.Card'),
-		cards = [$(cCard)], card;
-
-	for(var i=0; i<3; i++) {
-		card = cCard.clone();
-
-		card.find('.TabHead, .TabItem').each(function() {
-			this.dataset.tab = 'SKill'+(i+2);
-		});
-
-		cCards.append(card);
-		cards.push($(card));
-	}
-
-	window.cards = cards;
-})();
-
-(function() {
-	window.kqd = {
+	window.gDict = {
 		page: 0,
 		pageMax: 0,
 
@@ -37,13 +18,13 @@
 		tips: $('.Tips')
 	};
 
-	window.kqs = {
+	window.kqv = {
 		page: $('.sPage'),
 		pageMax: $('.sPageMax')
 	};
 
-	kqs.cards = window.cards;
-	delete window.cards;
+	kqv.items = window.items;
+	delete window.items;
 
 	window.kqf = {
 		retab: function() {
@@ -76,10 +57,10 @@
 			});
 		},
 		dealer: function(result) {
-			var i, datas = result[0], cards = kqs.cards;
+			var i, datas = result[0], cards = kqv.cards;
 
-			kqs.page.html(kqd.page = ~~result[1]);
-			kqs.pageMax.html(kqd.pageMax = ~~result[2]);
+			kqv.page.html(gDict.page = ~~result[1]);
+			kqv.pageMax.html(gDict.pageMax = ~~result[2]);
 
 			for(i in cards) cards[i].addClass('hide');
 
@@ -159,7 +140,7 @@
 		},
 		param: function(moder) {
 			var result = $.extend({}, kq.conds, {
-				page: kqd.page,
+				page: gDict.page,
 				mark: kq.conds.mark.toString().replace(/\,/g, '~'),
 				zero: (/[1-9]/.test(kq.conds.mark.toString()))?0:1
 			});
@@ -169,15 +150,15 @@
 			return result;
 		},
 		query: function(moder, success, fail, always) {
-			if(kqd.xhrUnlock) {
-				kqd.xhrUnlock = false;
+			if(gDict.xhrUnlock) {
+				gDict.xhrUnlock = false;
 
 				return $.get({
 					url: 'kq/q',
 					data: kq.param(moder),
 					success: success
 				}).fail(fail).always(function() {
-					kqd.xhrUnlock = true;
+					gDict.xhrUnlock = true;
 
 					if(always) always();
 				});

@@ -22,46 +22,46 @@ if(self == top) { (function() {
 
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4 && xhr.status == 200) {
-			var r = JSON.parse(xhr.responseText), drs, dls, i, ca;
+			var r = JSON.parse(xhr.responseText), type, elem, info, ca;
 
-			if(r && r.s && r.d) {
-				drs = r.d.r || []; dls = r.d.l || []; ca = {};
+			if(r.s && r && r.e && r.i) {
+				type = r.e.type; elem = r.e.elem; info = r.i, ca = {};
 
-				for(i in drs) if(drs.hasOwnProperty(i))
-					qs(drs[i][2]).value = drs[i][1];
+				if(type == 'r') {
+					info.map(function(i, idx) {
+						qs(elem[idx]).value = i.text;
+					});
 
-				log('Aufoll Direct-Fill Done');
-
-				if(dls.length) {
-					log('Aufoll Delay-Fill Gone');
-
+					log('Aufoll Direct-Fill Done');
+				}
+				else if(type == 'l' && info.length) {
 					document.onclick = function() {
 						setTimeout(function() {
 							var e;
 
-							for(i in dls) { if(dls.hasOwnProperty(i))
+							info.map(function(i, idx) {
 								if(!ca[i]) {
-									e = qs(dls[i][2]);
+									e = qs(elem[idx]);
 
 									if(e) {
-										ca[i] = true;
-										e.value = dls[i][1];
-										log('Aufoll Delay-Fill ' + nt(dls[i][0]));
+										ca[idx] = true;
+										qs(elem[idx]).value = i.text;
+										log('Aufoll Delay-Fill ' + nt(i.name));
 									}
 								}
-							}
+							});
 
-							if(Object.keys(ca).length == dls.length) {
+							if(Object.keys(ca).length == info.length) {
 								log('Aufoll Delay-Fill Done');
 								document.onclick = null;
 							}
-						}, 700);
+						}, 410);
 					};
 				}
 			}
 		}
 	};
 
-	xhr.open('GET', 'https://danor.top/af/pwd?c=danor&d='+btoa(location.href), true);
+	xhr.open('GET', 'https://localhost/af/pwd?c=danor&d='+btoa(location.href), true);
 	xhr.send();
 })(); }

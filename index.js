@@ -37,6 +37,8 @@ module.exports = ($) => {
 
 		if(!query.c || !query.d)
 			this.body = { s: false, r: 'param lack' };
+		else if($.conf.key != query.c)
+			this.body = { s: false, r: 'key incorrect' };
 		else if(query.d) {
 			let url = URL.parse(new Buffer(query.d, 'base64').toString(), true);
 
@@ -44,51 +46,57 @@ module.exports = ($) => {
 				let record = $.dict.idx[url.host];
 
 				if(record) {
+					for(let rule of record.rule) {
+						let hitRule = 0;
 
-					for(let ruleArr of record.rule) {
-						let isMatch = false;
+						for(let matcher of rule.rule)
+							if(
+								(matcher.type == 't' && matcher.text == '*') ||
+								(matcher.type == 'p' && url.path.indexOf(matcher.text)+1 == 1) ||
+								(matcher.type == 'r' && RegExp(matcher.text).test(url.href)) ||
+								false
+							)
+								hitRule++;
 
-						for(let rule of ruleArr)
-							if(rule.type == 't' && rule.text == '*') {
-								isMatch = true;
+						if(hitRule == rule.rule.length) {
+							this.body = { s: true, e: record.elem[rule.elem], i: record.info[rule.info[0]] };
 
-								break;
-							}
-
-						if(isMatch) {
-							this.body = {};
+							break;
 						}
 					}
-
-					this.body = {
-						s: true,
-						d: record
-					};
 				}
 				else
 					this.body = { s: false, r: 'record not found' };
 			}
 			else {
-				let domain = query.d.split('.').reverse();
-				domain.unshift([domain.shift(), domain.shift()].reverse().join('.'));
+				url.domains = url.host.split('.').reverse();
+				url.domains.unshift([url.domains.shift(), url.domains.shift()].reverse().join('.'));
 
-				if($.conf.key == query.c) {
-					if($.dict[domain[0]]) {
-						let record = $.dict[domain[0]][domain[1]] || $.dict[domain[0]]['*'];
+				let record = $.dict.idx[url.domains[0]];
 
-						if(record)
-							this.body = {
-								s: true,
-								d: record
-							};
-						else
-							this.body = { s: false, r: 'record not found' };
+				if(record) {
+					for(let rule of record.rule) {
+						let hitRule = 0;
+
+						for(let matcher of rule.rule)
+							if(
+								(matcher.type == 't' && matcher.text == '*') ||
+								(matcher.type == 't' && matcher.text == url.domains[1]) ||
+								(matcher.type == 'p' && url.path.indexOf(matcher.text)+1 == 1) ||
+								(matcher.type == 'r' && RegExp(matcher.text).test(url.href)) ||
+								false
+							)
+								hitRule++;
+
+						if(hitRule == rule.rule.length) {
+							this.body = { s: true, e: record.elem[rule.elem], i: record.info[rule.info[0]] };
+
+							break;
+						}
 					}
-					else
-						this.body = { s: false, r: 'record not found' };
 				}
 				else
-					this.body = { s: false, r: 'key incorrect' };
+					this.body = { s: false, r: 'record not found' };
 			}
 		}
 	});
@@ -97,6 +105,14 @@ module.exports = ($) => {
 		yield next;
 
 		this.body = fs.readFileSync($.pa('asset/html/index.html')).toString();
+	});
+
+	router.get('/ls', function*(next) {
+		yield next;
+
+		let page = qs.parse(this.req._parsedUrl.query).p;
+
+		this.body = $.dict.arr.slice((page - 1) * 20, page * 20);
 	});
 
 	let cleancss = new CleanCSS({restructuring:false});

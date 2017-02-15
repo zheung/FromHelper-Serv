@@ -4,20 +4,18 @@ let transDict = (raw) => {
 	for(let r of raw) {
 		let record = {
 			name: r[0], mark: r[1],
-			main: r[2], elem: r[3],
+			main: r[2], elem: [],
 			rule: [], info: []
 		};
+
+		for(let ra of r[3])
+			record.elem.push({ type: ra.shift(), elem: ra });
 
 		for(let ra of r[4]) {
 			let item = { elem: ra.shift(), info: ra.shift(), rule: [] };
 
-			for(let r of ra) {
-				let rule = {};
-
-				[rule.name, rule.type, rule.text] = r;
-
-				item.rule.push(rule);
-			}
+			for(let r of ra)
+				item.rule.push({ name: r[0], type: r[1], text: r[2]});
 
 			record.rule.push(item);
 		}
@@ -25,13 +23,8 @@ let transDict = (raw) => {
 		for(let ra of r[5]) {
 			let item = [];
 
-			for(let r of ra) {
-				let info = {};
-
-				[info.name, info.type, info.text] = r;
-
-				item.push(info);
-			}
+			for(let r of ra)
+				item.push({ name: r[0], type: r[1], text: r[2]});
 
 			record.info.push(item);
 		}

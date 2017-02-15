@@ -29,10 +29,12 @@
 	"globals": {
 		"$": true,
 
+		"d": true,
+
 		"kq": true,
 		"kqe": true,
-		"kqs": true,
-		"kqd": true,
+		"kqv": true,
+		"gDict": true,
 		"kqf": true
 	}
 }
