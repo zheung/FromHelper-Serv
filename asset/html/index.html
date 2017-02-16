@@ -39,11 +39,11 @@
 					</div>
 				</div>
 				<div class="Pager flex jcb aic">
-					<a class="PagePrev flex jcc aic">上一页</a>
-					<div class="PageCount flex jcc aic">
-						第<span class="Page sPage" contenteditable="true"></span>/&nbsp;<span class="sPageMax"></span>&nbsp;页
+					<a id="RecordPrev" class="PagerPrev flex jcc aic">上一页</a>
+					<div class="PagerCount flex jcc aic">
+						第<span id="RecordPage" class="Page" contenteditable="true"></span>/&nbsp;<span id="RecordPageMax"></span>&nbsp;页
 					</div>
-					<a class="PageNext flex jcc aic">下一页</a>
+					<a id="RecordNext" class="PagerNext flex jcc aic">下一页</a>
 				</div>
 			</div>
 			<div class="Navi blrNavi">
@@ -132,11 +132,12 @@
 		</div>
 		<div class="Popup"></div>
 
-		<script type="text/javascript">window.d = { v: {}, e: {}, t: {} };</script>
+		<script type="text/javascript">window.d = { v: {}, e: {}, t: {}, f:{} };</script>
 
-		<script type="text/javascript" src="pub/js/jquery.min.js"></script>
+		<script type="text/javascript" src="pub/js/jquery.js"></script>
 		<script type="text/javascript" src="af/js/pre.js"></script>
 		<script type="text/javascript" src="af/js/tool/comm.js"></script>
+		<script type="text/javascript" src="af/js/tool/pager.js"></script>
 		<script type="text/javascript" src="af/js/init.js"></script>
 		<!--<script type="text/javascript" src="af/js/all.min.js"></script>
 		<script type="text/javascript" src="af/js/kq.js"></script>-->

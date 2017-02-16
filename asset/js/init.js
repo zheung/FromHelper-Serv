@@ -134,34 +134,37 @@
 // })();
 
 (function() {
-	d.e.Search.click(function() {
-		d.t.get('af/ls', { p: 1 }, function(records) {
-			records.map(function(record, i) {
-				var eRecord = d.e.records[i];
+	d.f.pageTurn = function(page) {
+		d.t.get('af/ls', { p: (typeof page == 'number' && page ? page : 1) }, function(obj) {
+			d.e.records.map(function(eRecord, i) {
+				var record = obj.records[i];
 
-				var infos = record.info, mains = {};
+				if(record) {
+					var infos = record.info, mains = {};
 
-				infos.map(function(info) {
-					info.map(function(inf) {
-						if(inf.name == 'm') mains[inf.text] = true;
+					infos.map(function(info) {
+						info.map(function(inf) {
+							if(inf.name == 'm') mains[inf.text] = true;
+						});
 					});
-				});
 
-				eRecord.find('.sName').html(record.name);
-				eRecord.find('.sLink').attr('href', 'http://'+record.main[0]);
-				eRecord.find('.sMain').html(Object.keys(mains).join('; '));
+					eRecord.find('.sName').html(record.name);
+					eRecord.find('.sLink').attr('href', 'http://'+record.main[0]);
+					eRecord.find('.sMain').html(Object.keys(mains).join('; '));
+				}
+
+				eRecord.children()[record ? 'removeClass' : 'addClass']('hide');
+				eRecord[record ? 'removeClass' : 'addClass']('hidden');
 			});
 
+			d.t.pagerDeal(obj.now, obj.max, d.v.pager['record']);
 		});
-	});
-	// kqe.pagePrev.click(function() {
-	// 	if(gDict.page > 1)
-	// 		kq.query(function(param) { param.page--; }, kqf.dealer);
-	// });
-	// kqe.pageNext.click(function() {
-	// 	if(gDict.page < gDict.pageMax)
-	// 		kq.query(function(param) { param.page++; }, kqf.dealer);
-	// });
+	};
+})();
+(function() {
+	d.t.pager('record', d.e.RecordPrev, d.e.RecordNext, d.e.RecordPage, d.e.RecordPageMax, d.f.pageTurn);
+
+	d.e.Search.on('click', d.f.pageTurn);
 })();
 
 // (function() {

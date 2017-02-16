@@ -247,6 +247,10 @@ a:visited {
 
 	font-size: 14px;
 }
+.Record.hidden {
+	border: 2px solid transparent;
+}
+
 .Detail {
 	border: 2px solid transparent;
 
@@ -296,15 +300,15 @@ a:visited {
 	white-space: nowrap;
 }
 
-.PagePrev, .PageNext {
+.PagerPrev, .PagerNext {
 	width: 33%;
 
 	cursor: pointer;
 }
-.PageCount {
+.PagerCount {
 	width: 33%;
 }
-.PageCount>span {
+.PagerCount>span {
 	padding-top: 1px;
 }
 .Page {

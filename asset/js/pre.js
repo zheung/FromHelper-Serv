@@ -21,6 +21,10 @@
 
 (function() {
 	d.e.Search = $('#Search');
+	d.e.RecordPrev = $('#RecordPrev');
+	d.e.RecordNext = $('#RecordNext');
+	d.e.RecordPage = $('#RecordPage');
+	d.e.RecordPageMax = $('#RecordPageMax');
 
 
 })();

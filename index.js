@@ -110,9 +110,10 @@ module.exports = ($) => {
 	router.get('/ls', function*(next) {
 		yield next;
 
-		let page = qs.parse(this.req._parsedUrl.query).p;
+		let page = ~~qs.parse(this.req._parsedUrl.query).p, len = $.dict.arr.length,
+			start = (page - 1) * 20, end = page*20, max = Math.ceil(len / 20);
 
-		this.body = $.dict.arr.slice((page - 1) * 20, page * 20);
+		this.body = { s:true, now: end>len ? 0 : page, max: max, records: $.dict.arr.slice(start, end)};
 	});
 
 	let cleancss = new CleanCSS({restructuring:false});
