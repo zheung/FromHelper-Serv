@@ -163,30 +163,14 @@
 })();
 (function() {
 	d.t.pager('record', d.e.RecordPrev, d.e.RecordNext, d.e.RecordPage, d.e.RecordPageMax, d.f.pageTurn);
+	d.t.taber('RightNavi', d.e.RightNaviHead, d.e.RightNaviItem, ['Basic', 'Config', 'About'], 'active');
 
 	d.e.Search.on('click', d.f.pageTurn);
 })();
 
-// (function() {
-// 	$('.sThumb').bind('error', function() {
-// 		var src = this.src;
-
-// 		if(/20\//.test(src)) {
-// 			this.src = src.replace(/20\//g, '21/');
-
-// 			return;
-// 		}
-// 		if(/21\//.test(src)) {
-// 			this.src = './kq/img/no20.png';
-
-// 			return;
-// 		}
-// 	});
-// })();
-
 // Init
 (function() {
 	// kqf.retab();
-	// $('.TabHead').filter('.active').click();
 	d.e.Search.click();
+	d.e.RightNaviHead.first().click();
 })();
