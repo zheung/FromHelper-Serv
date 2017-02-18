@@ -27,7 +27,11 @@
 	d.e.RecordPage = $('#RecordPage');
 	d.e.RecordPageMax = $('#RecordPageMax');
 
-	d.e.RightNaviHead = $('.TabHead.RightNavi');
-	d.e.RightNaviItem = $('.TabItem.RightNavi');
+	d.e.TabHeadRightNavi = $('.TabHead.RightNavi');
+	d.e.TabItemRightNavi = $('.TabItem.RightNavi');
 
+	d.e.TabHeadRightNavi2 = $('.TabHead.RightNavi2');
+	d.e.TabItemRightNavi2 = $('.TabItem.RightNavi2');
+
+	d.e.InfoType = $('#InfoType');
 })();

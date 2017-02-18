@@ -18,6 +18,16 @@ input, span {
 	outline: none;
 }
 
+input {
+	border: 2px none;
+
+	background-color: #34495e;
+	color: #E0E2E4;
+}
+input:focus {
+	border-bottom: 1px solid #E0E2E4;
+}
+
 a {
 	text-decoration: none;
 	color: #E0E2E4
@@ -100,7 +110,7 @@ a:visited {
 	min-width: 24px;
 }
 
-.Button {
+/*.Button {
 	margin: 3px;
 	min-width: 30px;
 
@@ -118,7 +128,7 @@ a:visited {
 	background-color: #557799;
 
 	cursor: pointer;
-}
+}*/
 
 .Input {
 	margin: 3px;
@@ -175,12 +185,12 @@ a:visited {
 
 .TabHeader.RightNavi2 {
 	width: 90%;
-	height: 34px;
+	height: 24px;
 	box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
 
 	background-color: #34495e;
 }
-.TabHead.RightNavi2, .TabHead.RightNavi3 {
+.TabHead.RightNavi2 {
 	width: 100%;
 
 	border: 2px solid #34495e;
@@ -195,19 +205,13 @@ a:visited {
 .TabHead.RightNavi2:hover {
 	border-top: 2px solid #148474;
 }
-.TabHead.RightNavi2.active, .TabHead.RightNavi3:hover, .TabHead.RightNavi3.active {
+.TabHead.RightNavi2.active {
 	border-radius: 4px;
 	border: 2px solid #148474;
 	background-color: #148474;
 }
 .TabItem.RightNavi2 {
-	height: 92%;
-	width: 100%;
-	overflow-x: hidden;
-	overflow-y: visible;
-}
-.TabItem.RightNavi3 {
-	height: 50%;
+	height: 80%;
 	width: 100%;
 	overflow-x: hidden;
 	overflow-y: visible;
@@ -308,14 +312,19 @@ a:visited {
 .PagerCount {
 	width: 33%;
 }
-.PagerCount>span {
+.PagerCount>* {
 	padding-top: 1px;
 }
 .Page {
 	width: 40px;
+	padding-top: 3px;
 
 	text-align: center;
+	font-size: 16px;
+
 	color: #E0E2E4;
+	background-color: #293134;
+
 
 	cursor: auto;
 }
@@ -437,7 +446,7 @@ kqud {
 	overflow: hidden;
 }
 
-.TabHead.Serv {
+.Button.Serv {
 	margin: 3px;
 	min-width: 30px;
 
@@ -453,12 +462,13 @@ kqud {
 	text-align: center;
 
 	cursor: pointer;
-
-
 }
-.TabHead.Serv.active {
+.Button.Serv:hover {
 	border: 2px solid #557799;
 
 	color: #E0E2E4;
 	background-color: #557799;
+}
+.Button.Serv>i {
+	display: inline;
 }

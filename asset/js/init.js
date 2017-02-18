@@ -162,8 +162,11 @@
 	};
 })();
 (function() {
-	d.t.pager('record', d.e.RecordPrev, d.e.RecordNext, d.e.RecordPage, d.e.RecordPageMax, d.f.pageTurn);
-	d.t.taber('RightNavi', d.e.RightNaviHead, d.e.RightNaviItem, ['Basic', 'Config', 'About'], 'active');
+	d.t.pager('record', d.e.RecordPrev, d.e.RecordNext, function(pager) { d.e.RecordPage.val(pager.now); }, d.e.RecordPageMax, d.f.pageTurn);
+	d.t.taber('RightNavi', d.e.TabHeadRightNavi, d.e.TabItemRightNavi, ['Basic', 'Config', 'About'], 'active');
+	d.t.taber('RightNavi2', d.e.TabHeadRightNavi2, d.e.TabItemRightNavi2, ['Basic', 'Info', 'Rule', 'Elem'], 'active');
+
+	d.t.swier('infoType', d.e.InfoType, ['文本', '密码', '复选']);
 
 	d.e.Search.on('click', d.f.pageTurn);
 })();
@@ -172,5 +175,8 @@
 (function() {
 	// kqf.retab();
 	d.e.Search.click();
-	d.e.RightNaviHead.first().click();
+	d.e.TabHeadRightNavi.first().click();
+	d.e.TabHeadRightNavi2.first().click();
+
+	d.e.InfoType.click();
 })();
