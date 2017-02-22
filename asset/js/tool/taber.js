@@ -4,7 +4,7 @@
 
 		if(typeof($this.data('stop')) != 'undefined') return false;
 
-		var data = $this.data(), key = data.taberKey, page = data.taberPage, func = data.taberFunc,
+		var data = $this.data(), key = data.taberKey, page = data.taberPage,
 			taber = d.v.taber[key], eHeads = taber.eHeads, eItems = taber.eItems;
 
 		if(page) {
@@ -14,13 +14,6 @@
 			eItems.filter(':not(.hide)').addClass('hide');
 			eItems.filter('[data-taber-page='+page+']').removeClass('hide');
 		}
-
-		// if(func) {
-		// 	eHeads.filter(':not([data-func='+func+'])').removeClass('active');
-		// 	$(this).addClass('active');
-
-		// 	kqf['tab'+key](func);
-		// }
 	};
 
 	d.v.taber = {};

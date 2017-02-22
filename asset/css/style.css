@@ -19,13 +19,21 @@ input, span {
 }
 
 input {
-	border: 2px none;
+	border: 1px solid transparent;
 
 	background-color: #34495e;
 	color: #E0E2E4;
 }
 input:focus {
 	border-bottom: 1px solid #E0E2E4;
+}
+select {
+	width: 50%;
+	background-color: #34495e;
+	color: #E0E2E4;
+	border-radius: 2px;
+	border: 2px solid transparent;
+	border-left: 2px solid #E0E2E4;
 }
 
 a {
@@ -110,7 +118,7 @@ a:visited {
 	min-width: 24px;
 }
 
-/*.Button {
+.Button.Click {
 	margin: 3px;
 	min-width: 30px;
 
@@ -128,7 +136,7 @@ a:visited {
 	background-color: #557799;
 
 	cursor: pointer;
-}*/
+}
 
 .Input {
 	margin: 3px;
@@ -137,6 +145,7 @@ a:visited {
 	height: 33px;
 
 	border: 2px solid #557799;
+	background-color: #E0E2E4;
 
 	padding: 4px;
 	padding-left: 3px;
@@ -149,6 +158,9 @@ a:visited {
 	font-size: 17px;
 
 	cursor: auto;
+}
+.Input:focus {
+	border-bottom: 2px solid #557799;
 }
 
 .TabHeader.RightNavi {
@@ -471,4 +483,31 @@ kqud {
 }
 .Button.Serv>i {
 	display: inline;
+}
+
+.NaviItem {
+	width: 95%;
+	height: auto;
+	border: 1px none;
+	border-bottom: 1px solid #E0E2E4;
+}
+
+.NaviDetail {
+	width: 100%;
+	min-height: 45px;
+}
+.NaviDetail>.Button {
+	font-size: 14px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+.NaviDetail>input {
+	width: 100%;
+	padding-top: 1px;
+	padding-bottom: 1px;
+
+}
+
+.NaviColumn>.NaviItem:nth-child(1) {
+	padding-top: 10px;
 }

@@ -176,7 +176,7 @@
 	// kqf.retab();
 	d.e.Search.click();
 	d.e.TabHeadRightNavi.first().click();
-	d.e.TabHeadRightNavi2.first().click();
+	d.e.TabHeadRightNavi2.first().next().click();
 
 	d.e.InfoType.click();
 })();
