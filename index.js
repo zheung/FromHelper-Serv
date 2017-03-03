@@ -116,18 +116,18 @@ module.exports = ($) => {
 		this.body = { s:true, now: end>len ? 0 : page, max: max, records: $.dict.arr.slice(start, end)};
 	});
 
-	let cleancss = new CleanCSS({restructuring:false});
-	fs.writeFileSync($.pa('asset/css/kq.all.min.css'),
-		cleancss.minify(fs.readFileSync($.pa('../pub/asset/css/flex.css')).toString()).styles + '\r\n' +
-		cleancss.minify(fs.readFileSync($.pa('../pub/asset/css/small.css')).toString()).styles + '\r\n' +
-		cleancss.minify(fs.readFileSync($.pa('asset/css/style.css')).toString()).styles + '\r\n' +
-		cleancss.minify(fs.readFileSync($.pa('asset/css/test.css')).toString()).styles + '\r\n' +
-		cleancss.minify(fs.readFileSync($.pa('asset/css/color.css')).toString()).styles
-	);
-	fs.writeFileSync($.pa('asset/js/kq.all.min.js'),
-		UglifyJS.minify($.pa('asset/js/kq.js')).code + '\r\n' +
-		UglifyJS.minify($.pa('asset/js/init.js')).code
-	);
+	// let cleancss = new CleanCSS({restructuring:false});
+	// fs.writeFileSync($.pa('asset/css/kq.all.min.css'),
+	// 	cleancss.minify(fs.readFileSync($.pa('../pub/asset/css/flex.css')).toString()).styles + '\r\n' +
+	// 	cleancss.minify(fs.readFileSync($.pa('../pub/asset/css/small.css')).toString()).styles + '\r\n' +
+	// 	cleancss.minify(fs.readFileSync($.pa('asset/css/style.css')).toString()).styles + '\r\n' +
+	// 	cleancss.minify(fs.readFileSync($.pa('asset/css/test.css')).toString()).styles + '\r\n' +
+	// 	cleancss.minify(fs.readFileSync($.pa('asset/css/color.css')).toString()).styles
+	// );
+	// fs.writeFileSync($.pa('asset/js/kq.all.min.js'),
+	// 	UglifyJS.minify($.pa('asset/js/kq.js')).code + '\r\n' +
+	// 	UglifyJS.minify($.pa('asset/js/init.js')).code
+	// );
 
 	return app.use(router.routes()).use(router.allowedMethods());
 };

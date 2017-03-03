@@ -23,6 +23,8 @@ input {
 
 	background-color: #34495e;
 	color: #E0E2E4;
+
+	font-size: 16px;
 }
 input:focus {
 	border-bottom: 1px solid #E0E2E4;
@@ -136,6 +138,19 @@ a:visited {
 	background-color: #557799;
 
 	cursor: pointer;
+}
+.Button.AddItem {
+	height: 45px;
+	width: 100%;
+
+	margin-top: 14px;
+
+	border: 2px dashed transparent;
+
+	cursor: pointer;
+}
+.Button.AddItem:hover {
+	border: 2px dashed #E0E2E4;
 }
 
 .Input {
@@ -332,11 +347,9 @@ a:visited {
 	padding-top: 3px;
 
 	text-align: center;
-	font-size: 16px;
 
 	color: #E0E2E4;
 	background-color: #293134;
-
 
 	cursor: auto;
 }
