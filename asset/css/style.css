@@ -516,9 +516,8 @@ kqud {
 }
 .NaviDetail>input {
 	width: 100%;
-	padding-top: 1px;
+	padding-top: 3px;
 	padding-bottom: 1px;
-
 }
 
 .NaviColumn>.NaviItem:nth-child(1) {

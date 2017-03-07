@@ -17,7 +17,11 @@
 	d.v.swier = {};
 
 	d.t.swier = function(key, eButton, values, now, func) {
-		eButton.on('click', clicker).data('swierKey', key).data('swierNow', now || -1);
+		eButton.on('click', clicker).data('swierKey', key).each(function() {
+			var $this = $(this), now = $this.data('swierNow') || -1;
+
+			$this.html(values[now]);
+		});
 
 		d.v.swier[key] = {
 			eButton: eButton, func: func,
