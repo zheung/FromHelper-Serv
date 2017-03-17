@@ -1,26 +1,27 @@
 (function() {
 	var clicker = function() {
-		var $this = $(this);
+		var $this = $(this), data = $this.data();
 
-		if(typeof($this.data('stop')) != 'undefined') return false;
-
-		var data = $this.data(), key = data.swierKey, now = ++data.swierNow,
+		var key = data.swierKey, now = ++data.swierNow,
 			swier = d.v.swier[key], values = swier.values, len = swier.len, func = swier.func;
 
 		if(now == len) now = data.swierNow = 0;
 
 		$this.html(values[now]);
 
-		if(func) func(values, now);
+		if(func) func(now, $this, values);
 	};
 
 	d.v.swier = {};
 
-	d.t.swier = function(key, eButton, values, now, func) {
+	d.t.swier = function(key, eButton, values, func) {
 		eButton.on('click', clicker).data('swierKey', key).each(function() {
-			var $this = $(this), now = $this.data('swierNow') || -1;
+			var $this = $(this), now = $this.data('swierNow') || 0;
 
 			$this.html(values[now]);
+			$this.data('swierNow', now);
+
+			if(func) func(now, $this, values);
 		});
 
 		d.v.swier[key] = {

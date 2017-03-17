@@ -31,7 +31,9 @@
 	d.t.taber('RightNavi', d.e.TabHeadRightNavi, d.e.TabItemRightNavi, ['Basic', 'Config', 'About'], 'active');
 	d.t.taber('RightNavi2', d.e.TabHeadRightNavi2, d.e.TabItemRightNavi2, ['Basic', 'Info', 'Rule', 'Elem'], 'active');
 
-	d.t.swier('infoType', d.e.InfoType, ['文本', '密码', '复选']);
+	d.t.swier('infoType', d.e.InfoType, ['文本', '密码', '复选'], function(now, who) {
+		who.next().next().attr('type', ['text', 'password', 'checkbox'][now]);
+	});
 
 	d.e.Search.on('click', d.f.pageTurn);
 })();
@@ -41,6 +43,4 @@
 	d.e.Search.click();
 	d.e.TabHeadRightNavi.first().click();
 	d.e.TabHeadRightNavi2.first().next().click();
-
-	d.e.InfoType.click();
 })();
