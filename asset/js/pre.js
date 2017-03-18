@@ -1,10 +1,14 @@
+// 固定主界面宽度
 (function() {
-	$(window).resize(function() {
+	var resizer = function() {
 		$('.Main').width(document.body.clientWidth-450);
-	});
-	$('.Main').width(document.body.clientWidth-450);
-})();
+		$('.TabItem.RightNavi').height(document.body.clientHeight-45);
+	};
 
+	$(window).resize(resizer);
+	resizer();
+})();
+// 复制条目Div
 (function() {
 	var eRecords = $('.Records'), eRecord = eRecords.children('.Record'),
 		records = [$(eRecord)], record;
@@ -16,9 +20,10 @@
 		records.push($(record));
 	}
 
+
 	d.e.records = records;
 })();
-
+// 功能Div入库
 (function() {
 	d.e.Search = $('#Search');
 
