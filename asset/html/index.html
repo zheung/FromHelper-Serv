@@ -71,11 +71,13 @@
 						</div>
 					</div>
 
-					<div class="TabHeader RightNavi2 flex jca aih wpn">
-						<a class="TabHead RightNavi2 flex jcc aic" data-taber-page="Basic">基本</a>
-						<a class="TabHead RightNavi2 flex jcc aic" data-taber-page="Info">信息</a>
-						<a class="TabHead RightNavi2 flex jcc aic" data-taber-page="Rule">规则</a>
-						<a class="TabHead RightNavi2 flex jcc aic" data-taber-page="Elem">元素</a>
+					<div class="NaviColumn flex jcb aic wpw">
+						<div class="TabHeader RightNavi2 flex jca aih wpn">
+							<a class="TabHead RightNavi2 flex jcc aic" data-taber-page="Basic">基本</a>
+							<a class="TabHead RightNavi2 flex jcc aic" data-taber-page="Info">信息</a>
+							<a class="TabHead RightNavi2 flex jcc aic" data-taber-page="Rule">规则</a>
+							<a class="TabHead RightNavi2 flex jcc aic" data-taber-page="Elem">元素</a>
+						</div>
 					</div>
 					<div class="TabItem RightNavi2 fs11 flex drc jcb aic wpw" data-taber-page="Basic">
 						<div class="NaviColumn flex jcb aic wpw">
@@ -92,29 +94,38 @@
 						</div>
 					</div>
 					<div class="TabItem RightNavi2 fs14 flex drr jcc ais acs wpw" data-taber-page="Info">
-						<div class="NaviColumn flex jcc aic wpw">
+						<div class="NaviColumn flex jcc aic wpw hide">
 							<div class="NaviItem Head flex drr jcb aic">
 								<div class="NaviDetail flex drr jcb aic">
 									<div>
 										<i class="fa fa-address-card-o"></i>
-										<input type="text" placeholder="信息组标题" value="信息02"></input>
+										<input type="text" placeholder="信息组标题"></input>
 									</div>
 									<div>
-										<i class="fa fa-plus"></i>
-										<i class="fa fa-trash-o"></i>
+										<i class="AddInfo curp fa fa-plus"></i>&nbsp;
+										<i class="DelInfos curp fa fa-minus"></i>&nbsp;
+										<i class="DelGroup curp fa fa-trash-o"></i>
 									</div>
 								</div>
 							</div>
 							<div class="NaviItem flex drc jcc aic" data-="">
-								<div class="NaviDetail flex drr jcs aic" data->
+								<div class="NaviDetail flex drr jcs aic hide">
 									<a class="Button Click InfoType"></a>
-									<input type="text" placeholder="标题" value="帐号"></input>
-									<input type="text" placeholder="信息" ></input>
+									<input type="text" placeholder="信息名"></input>
+									<input type="text" placeholder="信息"></input>
+									<i class="DelInfo curp fa fa-minus hide"></i>
+								</div>
+								<div class="NaviDetail flex drr jcs aic">
+									<a class="Button Click InfoType"></a>
+									<input type="text" placeholder="信息名" value="帐号"></input>
+									<input type="text" placeholder="信息"></input>
+									<i class="DelInfo curp fa fa-minus hide"></i>
 								</div>
 								<div class="NaviDetail flex drr jcs aic">
 									<a class="Button Click InfoType" data-swier-now="1"></a>
-									<input type="text" placeholder="标题" value="密码"></input>
+									<input type="text" placeholder="信息名" value="密码"></input>
 									<input type="text" placeholder="信息"></input>
+									<i class="DelInfo curp fa fa-minus hide"></i>
 								</div>
 							</div>
 						</div>
@@ -167,6 +178,7 @@
 		<script type="text/javascript" src="af/js/tool/pager.js"></script>
 		<script type="text/javascript" src="af/js/tool/taber.js"></script>
 		<script type="text/javascript" src="af/js/tool/swier.js"></script>
+		<script type="text/javascript" src="af/js/tool/hover.js"></script>
 		<script type="text/javascript" src="af/js/func.js"></script>
 		<script type="text/javascript" src="af/js/init.js"></script>
 		<!--<script type="text/javascript" src="af/js/all.min.js"></script>

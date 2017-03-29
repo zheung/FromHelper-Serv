@@ -37,6 +37,4 @@
 
 	d.e.TabHeadRightNavi2 = $('.TabHead.RightNavi2');
 	d.e.TabItemRightNavi2 = $('.TabItem.RightNavi2');
-
-	d.e.InfoType = $('.InfoType');
 })();
