@@ -22,7 +22,7 @@
 		<div class="Frame clrFont flex drr wpn jcs aic wpn">
 			<div class="Main blrBack flex drc jcc aic wpn">
 				<div class="Records flex drr jca aic aca wpw">
-						<div class="Record flex drr jcs ais acc wpw">
+					<div class="Record flex drr jcs ais acc wpw">
 						<div class="Detail flex drr jcs aic acc">
 							<div class="Icon flex jcc aic acc"><i class="fa fa-address-card-o"></i></div>
 							<span class="Show sName"></span>
@@ -31,10 +31,12 @@
 						<div class="Detail flex drr jcs aic acc">
 							<div class="Icon flex jcc aic acc"><i class="fa fa-user-o"></i></div>
 							<span class="Show sMain"></span>
+							<div class="Icon flex jcc aic acc"><a class="EditRecord fa fa-pencil curp hide" target="_blank"></a></div>
 						</div>
 						<div class="Detail flex drr jcs aic acc">
 							<div class="Icon flex jcc aic acc"><i class="fa fa-unlock-alt"></i></div>
 							<span class="Show sPass">**************</span>
+							<div class="Icon flex jcc aic acc"><a class="fa fa-trash-o curp hide" target="_blank"></a></div>
 						</div>
 					</div>
 				</div>
@@ -65,9 +67,9 @@
 							表单信息
 						</div>
 						<div>
-							<a class="Button Serv" data-tab="Serv" data-func="cn"><i class="fa fa-save"></i></a>
-							<a class="Button Serv" data-tab="Serv" data-func="cn"><i class="fa fa-undo"></i></a>
-							<a class="Button Serv" data-tab="Serv" data-func="cn"><i class="fa fa-trash-o"></i></a>
+							<a class="Save Button Serv" data-tab="Serv" data-func="cn"><i class="fa fa-save"></i></a>
+							<a class="Reset Button Serv" data-tab="Serv" data-func="cn"><i class="fa fa-undo"></i></a>
+							<a class="Delete Button Serv" data-tab="Serv" data-func="cn"><i class="fa fa-trash-o"></i></a>
 						</div>
 					</div>
 
@@ -75,21 +77,48 @@
 						<div class="TabHeader RightNavi2 flex jca aih wpn">
 							<a class="TabHead RightNavi2 flex jcc aic" data-taber-page="Basic">基本</a>
 							<a class="TabHead RightNavi2 flex jcc aic" data-taber-page="Info">信息</a>
-							<a class="TabHead RightNavi2 flex jcc aic" data-taber-page="Rule">规则</a>
 							<a class="TabHead RightNavi2 flex jcc aic" data-taber-page="Elem">元素</a>
+							<a class="TabHead RightNavi2 flex jcc aic" data-taber-page="Rule">规则</a>
 						</div>
 					</div>
-					<div class="TabItem RightNavi2 fs11 flex drc jcb aic wpw" data-taber-page="Basic">
-						<div class="NaviColumn flex jcb aic wpw">
-							<a class="w4 Toggle" data-cond="job" data-x="s">主域名</a>
-							<div class="CondBar flex jca aic wpw">
-								<span contenteditable="true">baidu.com</span>
+					<div class="TabItem RightNavi2 fs14 flex drr jcc ais acs wpw" data-taber-page="Basic">
+						<div class="NaviColumn flex jcc aic wpw">
+							<div class="NaviItem Head flex drr jcb aic">
+								<div class="NaviDetail flex drr jcb aic">
+									<div>
+										<i class="fa fa-address-card-o"></i>
+										<span>主域名</span>
+									</div>
+								</div>
+							</div>
+							<div class="NaviItem flex drc jcc aic" data-="">
+								<div class=" NaviDetail flex drr jcs aic">
+									<input class="iName" type="text" placeholder="条目名称"></input>
+								</div>
 							</div>
 						</div>
-						<div class="NaviColumn flex jcb aic wpw">
-							<a class="w4 Toggle" data-cond="job" data-x="s">主域名</a>
-							<div class="CondBar flex jca aic wpw">
-								<span contenteditable="true">baidu.com</span>
+						<div class="NaviColumn flex jcc aic wpw">
+							<div class="NaviItem Head flex drr jcb aic">
+								<div class="NaviDetail flex drr jcb aic">
+									<div>
+										<i class="fa fa-address-card-o"></i>
+										<span>主域名</span>
+									</div>
+									<div>
+										<i class="AddItem Domain curp fa fa-plus"></i>&nbsp;
+										<i class="DelItems curp fa fa-minus"></i>&nbsp;
+									</div>
+								</div>
+							</div>
+							<div class="NaviItem flex drc jcc aic" data-="">
+								<div class="NaviDetail flex drr jcs aic hide">
+									<input type="text" placeholder="一级域名"></input>
+									<i class="DelItem curp fa fa-minus hide"></i>
+								</div>
+								<div class="iDomain NaviDetail flex drr jcs aic">
+									<input type="text" placeholder="一级域名"></input>
+									<i class="DelItem curp fa fa-minus hide"></i>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -102,8 +131,8 @@
 										<input type="text" placeholder="信息组标题"></input>
 									</div>
 									<div>
-										<i class="AddInfo curp fa fa-plus"></i>&nbsp;
-										<i class="DelInfos curp fa fa-minus"></i>&nbsp;
+										<i class="AddItem curp fa fa-plus"></i>&nbsp;
+										<i class="DelItems curp fa fa-minus"></i>&nbsp;
 										<i class="DelGroup curp fa fa-trash-o"></i>
 									</div>
 								</div>
@@ -113,30 +142,61 @@
 									<a class="Button Click InfoType"></a>
 									<input type="text" placeholder="信息名"></input>
 									<input type="text" placeholder="信息"></input>
-									<i class="DelInfo curp fa fa-minus hide"></i>
+									<i class="DelItem curp fa fa-minus hide"></i>
 								</div>
 								<div class="NaviDetail flex drr jcs aic">
 									<a class="Button Click InfoType"></a>
 									<input type="text" placeholder="信息名" value="帐号"></input>
 									<input type="text" placeholder="信息"></input>
-									<i class="DelInfo curp fa fa-minus hide"></i>
+									<i class="DelItem curp fa fa-minus hide"></i>
 								</div>
 								<div class="NaviDetail flex drr jcs aic">
 									<a class="Button Click InfoType" data-swier-now="1"></a>
 									<input type="text" placeholder="信息名" value="密码"></input>
 									<input type="text" placeholder="信息"></input>
-									<i class="DelInfo curp fa fa-minus hide"></i>
+									<i class="DelItem curp fa fa-minus hide"></i>
 								</div>
 							</div>
 						</div>
 						<div class="NaviColumn flex jcc aic wpw">
-							<a id="AddItem" class="Button AddItem flex jcc aic"><i class="fa fa-plus"></i></a>
+							<a class="Button AddGroup flex jcc aic"><i class="fa fa-plus"></i></a>
+						</div>
+					</div>
+					<div class="TabItem RightNavi2 fs14 flex drr jcc ais acs wpw" data-taber-page="Elem">
+						<div class="NaviColumn flex jcc aic wpw hide">
+							<div class="NaviItem Head flex drr jcb aic">
+								<div class="NaviDetail flex drr jcb aic">
+									<div>
+										<i class="fa fa-address-card-o"></i>
+										<input type="text" readonly value="元素组1"></input>
+									</div>
+									<div>
+										<i class="AddItem curp fa fa-plus"></i>&nbsp;
+										<i class="DelItems curp fa fa-minus"></i>&nbsp;
+										<i class="DelGroup curp fa fa-trash-o"></i>
+									</div>
+								</div>
+							</div>
+							<div class="NaviItem flex drc jcc aic" data-="">
+								<div class="NaviDetail flex drr jcs aic hide">
+									<input type="text" placeholder="选择器"></input>
+									<i class="DelItem curp fa fa-minus hide"></i>
+								</div>
+								<div class="NaviDetail flex drr jcs aic">
+									<input type="text" placeholder="选择器"></input>
+									<i class="DelItem curp fa fa-minus hide"></i>
+								</div>
+								<div class="NaviDetail flex drr jcs aic">
+									<input type="text" placeholder="选择器"></input>
+									<i class="DelItem curp fa fa-minus hide"></i>
+								</div>
+							</div>
+						</div>
+						<div class="NaviColumn flex jcc aic wpw">
+							<a class="Button AddGroup flex jcc aic"><i class="fa fa-plus"></i></a>
 						</div>
 					</div>
 					<div class="TabItem RightNavi2 fs11 flex drc jcb aic wpw" data-taber-page="Rule">
-						3
-					</div>
-					<div class="TabItem RightNavi2 fs11 flex drc jcb aic wpw" data-taber-page="Elem">
 						4
 					</div>
 				</div>

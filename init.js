@@ -2,40 +2,13 @@ let transDict = (raw) => {
 	let dict = { arr: [], idx: {} };
 
 	for(let r of raw) {
-		let record = {
-			name: r[0], mark: r[1],
-			main: r[2], elem: [],
-			rule: [], info: []
-		};
-
-		for(let ra of r[3])
-			record.elem.push({ type: ra.shift(), elem: ra });
-
-		for(let ra of r[4]) {
-			let item = { elem: ra.shift(), info: ra.shift(), rule: [] };
-
-			for(let r of ra)
-				item.rule.push({ name: r[0], type: r[1], text: r[2]});
-
-			record.rule.push(item);
-		}
-
-		for(let ra of r[5]) {
-			let item = [];
-
-			for(let r of ra)
-				item.push({ name: r[0], type: r[1], text: r[2]});
-
-			record.info.push(item);
-		}
-
-		for(let m of record.main)
+		for(let m of r.domn)
 			if(!dict.idx[m])
-				dict.idx[m] = record;
+				dict.idx[m] = r;
 			else
 				_l('warn: '+m+' has duplicate item');
 
-		dict.arr.push(record);
+		dict.arr.push(r);
 	}
 
 	return dict;

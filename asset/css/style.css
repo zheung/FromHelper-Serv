@@ -139,7 +139,7 @@ a:visited {
 
 	cursor: pointer;
 }
-.Button.AddItem {
+.Button.AddGroup {
 	height: 45px;
 	width: 100%;
 
@@ -149,7 +149,7 @@ a:visited {
 
 	cursor: pointer;
 }
-.Button.AddItem:hover {
+.Button.AddGroup:hover {
 	border: 2px dashed #E0E2E4;
 }
 
@@ -277,6 +277,9 @@ a:visited {
 	max-height: 150px;
 
 	font-size: 14px;
+}
+.Record:hover {
+	border: 2px solid #E0E2E4;
 }
 .Record.hidden {
 	border: 2px solid transparent;

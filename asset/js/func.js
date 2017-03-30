@@ -5,17 +5,19 @@
 			d.e.records.map(function(eRecord, i) {
 				var record = obj.records[i];
 
+				eRecord.data('record', record);
+
 				if(record) {
 					var infos = record.info, mains = {};
 
 					infos.map(function(info) {
-						info.map(function(inf) {
-							if(inf.name == 'm') mains[inf.text] = true;
+						info.info.map(function(inf) {
+							if(inf.type == 'm') mains[inf.data] = true;
 						});
 					});
 
 					eRecord.find('.sName').html(record.name);
-					eRecord.find('.sLink').attr('href', 'http://'+record.main[0]);
+					eRecord.find('.sLink').attr('href', 'http://'+record.domn[0]);
 					eRecord.find('.sMain').html(Object.keys(mains).join('; '));
 				}
 
@@ -27,38 +29,57 @@
 		});
 	};
 })();
+
 (function() {
-	d.f.addItem = function() {
+	d.f.addGroup = function() {
 		var item = $(this).parent();
+
 		item.parent().children(':first').clone().removeClass('hide').insertAfter(item.prev());
 
-		d.t.swier('infoType', $('.InfoType'), ['文本', '密码', '复选'], function(now, who) {
-			who.next().next().attr('type', ['text', 'password', 'checkbox'][now]);
-		});
-
-		$('.AddInfo').on('click', d.f.addInfo);
-		$('.DelInfos').on('click', d.f.delInfos);
-		$('.DelInfo').on('click', d.f.delInfo);
-		$('.DelGroup').on('click', d.f.delGroup);
+		d.f.refreshClick();
 	};
 
-	d.f.addInfo = function() {
-		var item = $(this).parent().parent().parent().next(),
-			target = item.children(':first').clone().removeClass('hide').appendTo(item);
+	d.f.addItem = function(e, clazz) {
+		var item = $(this).parent().parent().parent().next();
 
-		d.t.swier('infoType', target.children('.InfoType'), ['文本', '密码', '复选'], function(now, who) {
-			who.next().next().attr('type', ['text', 'password', 'checkbox'][now]);
-		});
+		item.children(':first').clone().addClass(clazz).removeClass('hide').appendTo(item);
 
-		target.children('.DelInfo').on('click', d.f.delInfo);
+		d.f.refreshClick();
 	};
-	d.f.delInfos = function() {
-		$(this).parent().parent().parent().next().find('.DelInfo').toggleClass('hide');
+	d.f.delItems = function() {
+		$(this).parent().parent().parent().next().find('.DelItem').toggleClass('hide');
 	};
-	d.f.delInfo = function() {
+	d.f.delItem = function() {
 		$(this).parent().remove();
 	};
 	d.f.delGroup = function() {
 		$(this).parent().parent().parent().parent().remove();
+	};
+
+	d.f.refreshClick = function() {
+		d.t.swier('infoType', $('.InfoType'), ['文本', '密码', '复选'], function(now, who) {
+			who.next().next().attr('type', ['text', 'password', 'checkbox'][now]);
+		});
+
+		$('.AddItem').off('click').on('click', d.f.addItem);
+		$('.DelItems').off('click').on('click', d.f.delItems);
+		$('.DelItem').off('click').on('click', d.f.delItem);
+		$('.DelGroup').off('click').on('click', d.f.delGroup);
+	};
+
+	d.f.editRecord = function() {
+		var record = $(this).data('record');
+
+		d.e.IName.val(record.name);
+
+		$('.iDomain').remove();
+		record.domn.map(function(domain) {
+			d.e.AddDomain.trigger('click', ['iDomain']);
+			$('.iDomain:last>input').val(domain);
+		});
+	};
+
+	d.f.saveRecord = function() {
+
 	};
 })();
