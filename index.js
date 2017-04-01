@@ -1,19 +1,23 @@
 let isIP = (host) => {
-	let match = host.match(/\d+/g);
+		let match = host.match(/\d+/g);
 
-	if(
-		match &&
-		(match.length == 4 || match.length == 5) &&
-		(1 < ~~match[0] && ~~match[0] < 255) &&
-		(0 < ~~match[1] && ~~match[1] < 255) &&
-		(0 < ~~match[2] && ~~match[2] < 255) &&
-		(0 < ~~match[3] && ~~match[3] < 255) &&
-		(!match[4] || (1 < ~~match[4] && ~~match[4] < 65535))
-	)
-		return true;
+		if(
+			match &&
+			(match.length == 4 || match.length == 5) &&
+			(1 < ~~match[0] && ~~match[0] < 255) &&
+			(0 < ~~match[1] && ~~match[1] < 255) &&
+			(0 < ~~match[2] && ~~match[2] < 255) &&
+			(0 < ~~match[3] && ~~match[3] < 255) &&
+			(!match[4] || (1 < ~~match[4] && ~~match[4] < 65535))
+		)
+			return true;
 
-	return false;
-};
+		return false;
+	},
+	saveDict = (dict) => {
+
+	};
+
 module.exports = ($) => {
 	$.rq('init');
 
@@ -113,7 +117,36 @@ module.exports = ($) => {
 		let page = ~~qs.parse(this.req._parsedUrl.query).p, len = $.dict.arr.length,
 			start = (page - 1) * 20, end = page*20, max = Math.ceil(len / 20);
 
-		this.body = { s:true, now: end>len ? 0 : page, max: max, records: $.dict.arr.slice(start, end)};
+		this.body = { s:true, now: end>len ? 0 : page, max: max, records: $.dict.arr.slice(start, end) };
+	});
+
+	router.post('/mod', function*(next) {
+		yield next;
+
+		let now = JSON.parse(this.request.body.record),
+			old = $.dict.ids[now.id],
+			idx = $.dict.arr.indexOf(old);
+
+		$.dict.ids[now.id] = now;
+
+		old.domn.map((d) => {
+			delete $.dict.idx[d];
+		});
+		now.domn.map((d) => {
+			let oldDomain = $.dict.idx[d];
+
+			if(oldDomain) {
+				_l('warn: '+oldDomain+' has duplicate item');
+			}
+
+			$.dict.idx[d] = now;
+		});
+
+		$.dict.arr.splice(idx, 1, now);
+
+		fs.writeFileSync($.pa('aufoll.json'), JSON.stringify($.dict.arr, null, '\t'));
+
+		this.body = { s:true };
 	});
 
 	// let cleancss = new CleanCSS({restructuring:false});

@@ -39,8 +39,8 @@
 		d.f.refreshClick();
 	};
 
-	d.f.addItem = function(e, clazz) {
-		var item = $(this).parent().parent().parent().next();
+	d.f.addItem = function(e, clazz_) {
+		var $this = $(this), item = $this.parent().parent().parent().next(), clazz = clazz_ || $this.data('addClass');
 
 		item.children(':first').clone().addClass(clazz).removeClass('hide').appendTo(item);
 
@@ -77,9 +77,37 @@
 			d.e.AddDomain.trigger('click', ['iDomain']);
 			$('.iDomain:last>input').val(domain);
 		});
+
+		d.v.recordNow = record;
+	};
+
+	d.f.checkRecord = function(record) {
+		if(!record.domn || !record.domn.length)
+			return '主域名不能为空';
 	};
 
 	d.f.saveRecord = function() {
+		var record = d.v.recordNow;
 
+		record.name = d.e.IName.val();
+		record.domn = [];
+
+		$('.iDomain>input').map(function() {
+			var domn = $(this).val();
+
+			if(domn)
+				record.domn.push(domn);
+		});
+
+		var checkResult = d.f.checkRecord(record);
+		if(checkResult) {
+			alert(checkResult);
+
+			return;
+		}
+
+		d.t.post('af/mod', { record: JSON.stringify(record) }, function() {debugger;
+			d.f.pageTurn(d.v.pager.record.now);
+		});
 	};
 })();

@@ -26,9 +26,12 @@
 
 	$('.Record').on('click', d.f.editRecord);
 
-	$('.sLink').on('click', function(e) {
+	$('.sLink')
+	.on('click', function(e) {
 		e.stopPropagation();
 	});
+
+	$('.Save').on('click', d.f.saveRecord);
 })();
 
 // Init

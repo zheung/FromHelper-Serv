@@ -1,5 +1,5 @@
 let transDict = (raw) => {
-	let dict = { arr: [], idx: {} };
+	let dict = { arr: [], idx: {}, ids: {} };
 
 	for(let r of raw) {
 		for(let m of r.domn)
@@ -8,6 +8,7 @@ let transDict = (raw) => {
 			else
 				_l('warn: '+m+' has duplicate item');
 
+		dict.ids[r.id] = r;
 		dict.arr.push(r);
 	}
 
