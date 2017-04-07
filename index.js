@@ -13,9 +13,6 @@ let isIP = (host) => {
 			return true;
 
 		return false;
-	},
-	saveDict = (dict) => {
-
 	};
 
 module.exports = ($) => {

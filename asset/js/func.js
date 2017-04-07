@@ -12,7 +12,7 @@
 
 					infos.map(function(info) {
 						info.info.map(function(inf) {
-							if(inf.type == 'm') mains[inf.data] = true;
+							if(inf.type == 0) mains[inf.data] = true;
 						});
 					});
 
@@ -31,10 +31,10 @@
 })();
 
 (function() {
-	d.f.addGroup = function() {
-		var item = $(this).parent();
+	d.f.addGroup = function(e, clazz_) {
+		var $this = $(this), item = $this.parent(), clazz = clazz_ || $this.data('addClass');
 
-		item.parent().children(':first').clone().removeClass('hide').insertAfter(item.prev());
+		item.parent().children(':first').clone().addClass(clazz).removeClass('hide').insertAfter(item.prev());
 
 		d.f.refreshClick();
 	};
@@ -74,9 +74,40 @@
 
 		$('.iDomain').remove();
 		record.domn.map(function(domain) {
-			d.e.AddDomain.trigger('click', ['iDomain']);
+			d.e.AddItemDomain.click();
 			$('.iDomain:last>input').val(domain);
 		});
+
+		$('.iInfoGroup').remove();
+		record.info.map(function(infoGroup) {
+			d.e.AddGroupInfo.click();
+
+			var group = $('.iInfoGroup:last'), addItem = group.find('.AddItem.Info');
+
+			group.find('.iInfo').remove();
+
+			infoGroup.info.map(function(info) {
+				addItem.click();
+
+				var iInfo = group.find('.iInfo:last');
+
+				if(info.type != 0) {
+					var iInfoType = iInfo.find('a');
+
+					if(info.type>0) {
+						iInfoType.click();
+
+						if(info.type>1) iInfoType.click();
+					}
+					iInfo.find('input:first').val(info.name);
+					iInfo.find('input:last').val(info.data);
+				}
+			});
+
+		});
+
+
+
 
 		d.v.recordNow = record;
 	};
@@ -95,18 +126,13 @@
 		$('.iDomain>input').map(function() {
 			var domn = $(this).val();
 
-			if(domn)
-				record.domn.push(domn);
+			if(domn) record.domn.push(domn);
 		});
 
 		var checkResult = d.f.checkRecord(record);
-		if(checkResult) {
-			alert(checkResult);
+		if(checkResult) return alert(checkResult);
 
-			return;
-		}
-
-		d.t.post('af/mod', { record: JSON.stringify(record) }, function() {debugger;
+		d.t.post('af/mod', { record: JSON.stringify(record) }, function() {
 			d.f.pageTurn(d.v.pager.record.now);
 		});
 	};

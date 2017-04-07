@@ -9,8 +9,17 @@
 				url: url,
 				data: data,
 			})
-			.done(done).fail(fail)
-			.always(function() {debugger;
+			.done(function(object) {
+				d.v.lockComm = false;
+
+				if(done) done(object);
+			})
+			.fail(function() {
+				d.v.lockComm = false;
+
+				if(fail) fail();
+			})
+			.always(function() {
 				d.v.lockComm = false;
 
 				if(always) always();
@@ -26,7 +35,16 @@
 				url: url,
 				data: data,
 			})
-			.done(done).fail(fail)
+			.done(function(object) {
+				d.v.lockComm = false;
+
+				if(done) done(object);
+			})
+			.fail(function() {
+				d.v.lockComm = false;
+
+				if(fail) fail();
+			})
 			.always(function() {
 				d.v.lockComm = false;
 

@@ -38,6 +38,8 @@
 	d.e.TabHeadRightNavi2 = $('.TabHead.RightNavi2');
 	d.e.TabItemRightNavi2 = $('.TabItem.RightNavi2');
 
-	d.e.AddDomain = $('.AddItem.Domain');
+	d.e.AddItemDomain = $('.AddItem.Domain');
+	d.e.AddGroupInfo = $('.AddGroup.Info');
+
 	d.e.IName = $('.iName');
 })();
