@@ -91,6 +91,8 @@
 
 				var iInfo = group.find('.iInfo:last');
 
+				iInfo.find('input:first').val(info.name);
+
 				if(info.type != 0) {
 					var iInfoType = iInfo.find('a');
 
@@ -99,9 +101,12 @@
 
 						if(info.type>1) iInfoType.click();
 					}
-					iInfo.find('input:first').val(info.name);
-					iInfo.find('input:last').val(info.data);
 				}
+
+				if(info.type != 2)
+					iInfo.find('input:last').val(info.data);
+				else
+					iInfo.find('input:last').attr('checked', info.data);
 			});
 
 		});
