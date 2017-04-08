@@ -86,6 +86,8 @@
 
 			group.find('.iInfo').remove();
 
+			group.find('input:first').val(infoGroup.name);
+
 			infoGroup.info.map(function(info) {
 				addItem.click();
 
@@ -106,13 +108,27 @@
 				if(info.type != 2)
 					iInfo.find('input:last').val(info.data);
 				else
-					iInfo.find('input:last').attr('checked', info.data);
+					iInfo.find('input:last').prop('checked', info.data);
+			});
+		});
+debugger;
+		$('.iElemGroup').remove();
+		record.elem.map(function(elemGroup) {
+			d.e.AddGroupElem.click();
+
+			var group = $('.iElemGroup:last'), addItem = group.find('.AddItem.Elem');
+
+			group.find('.iElem').remove();
+
+			group.find('input:first').val(elemGroup.name);
+
+			elemGroup.elem.map(function(elem) {
+				addItem.click();
+
+				group.find('.iElem:last').find('input').val(elem.data);
 			});
 
 		});
-
-
-
 
 		d.v.recordNow = record;
 	};
@@ -133,6 +149,32 @@
 
 			if(domn) record.domn.push(domn);
 		});
+
+		record.info = [];
+
+		$('.iInfoGroup').map(function() {
+			var iGroup = $(this), group = {
+				name: iGroup.find('input:first').val(),
+				info: []
+			};
+
+			iGroup.find('.iInfo').map(function() {
+				var iInfo = $(this), info = {
+					type: iInfo.find('a').data('swierNow'),
+					name: iInfo.find('input:first').val(),
+				};
+
+				if(info.type != 2)
+					info.data = iInfo.find('input:last').val();
+				else
+					info.data = iInfo.find('input:last').prop('checked');
+
+				group.info.push(info);
+			});
+
+			record.info.push(group);
+		});
+
 
 		var checkResult = d.f.checkRecord(record);
 		if(checkResult) return alert(checkResult);
