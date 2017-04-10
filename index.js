@@ -15,31 +15,29 @@ let isIP = (host) => {
 		return false;
 	};
 
-module.exports = ($) => {
+module.exports = ($, router) => {
 	$.rq('init');
 
-	let app = koa(), router = koaRouter(), URL = require('url');
+	$.st($.pa('asset'));
 
-	app.use(require('koa-static')($.pa('asset')));
+	router.get('/up', async(ctx, next) => {
+		await next();
 
-	router.get('/up', function*(next) {
-		yield next;
-
-		this.body = global.upDict();
+		ctx.body = global.upDict();
 	});
 
-	router.get('/pwd', function*(next) {
-		yield next;
+	router.get('/pwd', async(ctx, next) => {
+		await next();
 
-		this.set('Access-Control-Allow-Origin', '*');
-		this.set('Access-Control-Allow-Methods', 'GET');
+		ctx.set('Access-Control-Allow-Origin', '*');
+		ctx.set('Access-Control-Allow-Methods', 'GET');
 
-		let query = qs.parse(this.req._parsedUrl.query);
+		let query = qs.parse(ctx.req._parsedUrl.query);
 
 		if(!query.c || !query.d)
-			this.body = { s: false, r: 'param lack' };
+			ctx.body = { s: false, r: 'param lack' };
 		else if($.conf.key != query.c)
-			this.body = { s: false, r: 'key incorrect' };
+			ctx.body = { s: false, r: 'key incorrect' };
 		else if(query.d) {
 			let url = URL.parse(new Buffer(query.d, 'base64').toString(), true);
 
@@ -60,14 +58,14 @@ module.exports = ($) => {
 								hitRule++;
 
 						if(hitRule == rule.rule.length) {
-							this.body = { s: true, e: record.elem[rule.elem], i: record.info[rule.info[0]] };
+							ctx.body = { s: true, e: record.elem[rule.elem], i: record.info[rule.info[0]] };
 
 							break;
 						}
 					}
 				}
 				else
-					this.body = { s: false, r: 'record not found' };
+					ctx.body = { s: false, r: 'record not found' };
 			}
 			else {
 				url.domains = url.host.split('.').reverse();
@@ -90,37 +88,37 @@ module.exports = ($) => {
 								hitRule++;
 
 						if(hitRule == rule.rule.length) {
-							this.body = { s: true, e: record.elem[rule.elem], i: record.info[rule.info[0]] };
+							ctx.body = { s: true, e: record.elem[rule.elem], i: record.info[rule.info[0]] };
 
 							break;
 						}
 					}
 				}
 				else
-					this.body = { s: false, r: 'record not found' };
+					ctx.body = { s: false, r: 'record not found' };
 			}
 		}
 	});
 
-	router.get('/', function*(next) {
-		yield next;
+	router.get('/', async(ctx, next) => {
+		await next();
 
-		this.body = fs.readFileSync($.pa('asset/html/index.html')).toString();
+		ctx.body = fs.readFileSync($.pa('asset/html/index.html')).toString();
 	});
 
-	router.get('/ls', function*(next) {
-		yield next;
+	router.get('/ls', async(ctx, next) => {
+		await next();
 
-		let page = ~~qs.parse(this.req._parsedUrl.query).p, len = $.dict.arr.length,
+		let page = ~~qs.parse(ctx.req._parsedUrl.query).p, len = $.dict.arr.length,
 			start = (page - 1) * 20, end = page*20, max = Math.ceil(len / 20);
 
-		this.body = { s:true, now: end>len ? 0 : page, max: max, records: $.dict.arr.slice(start, end) };
+		ctx.body = { s:true, now: end>len ? 0 : page, max: max, records: $.dict.arr.slice(start, end) };
 	});
 
-	router.post('/mod', function*(next) {
-		yield next;
+	router.post('/mod', async(ctx, next) => {
+		await next();
 
-		let now = JSON.parse(this.request.body.record),
+		let now = JSON.parse(ctx.request.body.record),
 			old = $.dict.ids[now.id],
 			idx = $.dict.arr.indexOf(old);
 
@@ -143,21 +141,8 @@ module.exports = ($) => {
 
 		fs.writeFileSync($.pa('aufoll.json'), JSON.stringify($.dict.arr, null, '\t'));
 
-		this.body = { s:true };
+		ctx.body = { s:true };
 	});
 
-	// let cleancss = new CleanCSS({restructuring:false});
-	// fs.writeFileSync($.pa('asset/css/kq.all.min.css'),
-	// 	cleancss.minify(fs.readFileSync($.pa('../pub/asset/css/flex.css')).toString()).styles + '\r\n' +
-	// 	cleancss.minify(fs.readFileSync($.pa('../pub/asset/css/small.css')).toString()).styles + '\r\n' +
-	// 	cleancss.minify(fs.readFileSync($.pa('asset/css/style.css')).toString()).styles + '\r\n' +
-	// 	cleancss.minify(fs.readFileSync($.pa('asset/css/test.css')).toString()).styles + '\r\n' +
-	// 	cleancss.minify(fs.readFileSync($.pa('asset/css/color.css')).toString()).styles
-	// );
-	// fs.writeFileSync($.pa('asset/js/kq.all.min.js'),
-	// 	UglifyJS.minify($.pa('asset/js/kq.js')).code + '\r\n' +
-	// 	UglifyJS.minify($.pa('asset/js/init.js')).code
-	// );
-
-	return app.use(router.routes()).use(router.allowedMethods());
+	return router;
 };

@@ -111,7 +111,7 @@
 					iInfo.find('input:last').prop('checked', info.data);
 			});
 		});
-debugger;
+
 		$('.iElemGroup').remove();
 		record.elem.map(function(elemGroup) {
 			d.e.AddGroupElem.click();

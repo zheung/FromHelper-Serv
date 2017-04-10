@@ -1,9 +1,11 @@
 {
 	"env": {
-		"node": true,
-		"es6": true
+		"node": true
 	},
 	"extends": "eslint:recommended",
+	"parserOptions": {
+		"ecmaVersion": 8
+	},
 	"rules": {
 		"indent": [ 1, "tab" ],
 		"linebreak-style": [ 2, "windows" ],
@@ -15,6 +17,14 @@
 	"globals": {
 		"_c": true,
 		"_l": true,
-		"_d": true
+		"_d": true,
+
+		"fs": true,
+		"path": true,
+		"qs": true,
+		"URL": true,
+
+		"CleanCSS": true,
+		"UglifyJS": true
 	}
 }
