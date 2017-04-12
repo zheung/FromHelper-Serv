@@ -60,6 +60,7 @@
 		d.t.swier('infoType', $('.InfoType'), ['文本', '密码', '复选'], function(now, who) {
 			who.next().next().attr('type', ['text', 'password', 'checkbox'][now]);
 		});
+		d.t.swier('elemType', $('.ElemType'), ['静态', '动态']);
 
 		$('.AddItem').off('click').on('click', d.f.addItem);
 		$('.DelItems').off('click').on('click', d.f.delItems);
@@ -122,10 +123,13 @@
 
 			group.find('input:first').val(elemGroup.name);
 
-			elemGroup.elem.map(function(elem) {
+			if(elemGroup.type == 1)
+				group.find('.elemType').click();
+
+			elemGroup.selc.map(function(elem) {
 				addItem.click();
 
-				group.find('.iElem:last').find('input').val(elem.data);
+				group.find('.iElem:last>input').val(elem);
 			});
 
 		});

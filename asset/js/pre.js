@@ -40,6 +40,7 @@
 
 	d.e.AddItemDomain = $('.AddItem.Domain');
 	d.e.AddGroupInfo = $('.AddGroup.Info');
+	d.e.AddGroupElem = $('.AddGroup.Elem');
 
 	d.e.IName = $('.iName');
 })();
