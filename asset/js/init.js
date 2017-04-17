@@ -6,12 +6,6 @@
 	d.e.Search.on('click', d.f.pageTurn);
 })();
 (function() {
-	d.t.pager('record', d.e.RecordPrev, d.e.RecordNext, function(pager) { d.e.RecordPage.val(pager.now); }, d.e.RecordPageMax, d.f.pageTurn);
-	d.t.taber('RightNavi', d.e.TabHeadRightNavi, d.e.TabItemRightNavi, ['Basic', 'Config', 'About'], 'active');
-	d.t.taber('RightNavi2', d.e.TabHeadRightNavi2, d.e.TabItemRightNavi2, ['Basic', 'Info', 'Rule', 'Elem'], 'active');
-
-	d.e.Search.on('click', d.f.pageTurn);
-
 	$('.Button.AddGroup').on('click', d.f.addGroup);
 
 	d.f.refreshClick();
