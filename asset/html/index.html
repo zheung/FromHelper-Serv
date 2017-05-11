@@ -17,18 +17,20 @@
 		<link href="af/css/color.css" rel="stylesheet">
 	</head>
 	<body>
-		<div class="Frame clrFont flex drr wpn jcs aic wpn">
+		<div id="app" class="Frame clrFont flex drr wpn jcs aic wpn">
 			<div class="Main blrBack flex drc jcc aic wpn">
 				<div class="Records flex drr jca aic aca wpw">
-					<div class="Record flex drr jcs ais acc wpw">
+					<div class="Record flex drr jcs ais acc wpw" v-for="reco in recos">
 						<div class="Detail flex drr jcs aic acc">
 							<div class="Icon flex jcc aic acc"><i class="fa fa-address-card-o"></i></div>
-							<span class="Show sName"></span>
-							<div class="Icon flex jcc aic acc"><a class="fa fa-link sLink" target="_blank"></a></div>
+							<span class="Show sName">{{reco.name}}</span>
+							<div class="Icon flex jcc aic acc">
+								<a class="fa fa-link sLink" target="_blank" :href="'http://'+reco.domn[0]"></a>
+							</div>
 						</div>
 						<div class="Detail flex drr jcs aic acc">
 							<div class="Icon flex jcc aic acc"><i class="fa fa-user-o"></i></div>
-							<span class="Show sMain"></span>
+							<span class="Show sMain">{{mains(reco)}}</span>
 							<div class="Icon flex jcc aic acc"><a class="EditRecord fa fa-pencil curp hide" target="_blank"></a></div>
 						</div>
 						<div class="Detail flex drr jcs aic acc">
@@ -231,11 +233,18 @@
 			</div>
 		</div>
 
+
 		<script type="text/javascript">window.d = { v: {}, e: {}, t: {}, f:{} };</script>
+
+		<script type="text/javascript" src="af/js/reqwest.min.js"></script>
+		<script type="text/javascript" src="af/js/tool/comm.js"></script>
+
+		<script type="text/javascript" src="af/js/vue.js"></script>
+
+		<script type="text/javascript" src="af/js/app.js"></script>
 
 		<script type="text/javascript" src="pub/js/jquery.js"></script>
 		<script type="text/javascript" src="af/js/pre.js"></script>
-		<script type="text/javascript" src="af/js/tool/comm.js"></script>
 		<script type="text/javascript" src="af/js/tool/pager.js"></script>
 		<script type="text/javascript" src="af/js/tool/taber.js"></script>
 		<script type="text/javascript" src="af/js/tool/swier.js"></script>

@@ -35,6 +35,10 @@
 		"kqe": true,
 		"kqv": true,
 		"gDict": true,
-		"kqf": true
+		"kqf": true,
+
+		"app": true,
+		"Vue": true,
+		"reqwest": true
 	}
 }

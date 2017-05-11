@@ -1,55 +1,39 @@
 (function() {
-	d.v.lockComm = false;
+	window.comm = {
+		lock: false
+	};
 
-	d.t.get = function(url, data, done, fail, always) {
-		if(!d.v.lockComm) {
-			d.v.lockComm = true;
+	window.comm.request = function(method, url, data, done, fail, always) {
+		if(!window.comm.lock) {
+			window.comm.lock = true;
 
-			return $.get({
+			return reqwest({
+				method: method,
 				url: url,
-				data: data,
+				data: data
 			})
-			.done(function(object) {
-				d.v.lockComm = false;
+			.then(function(object) {
+				window.comm.lock = false;
 
 				if(done) done(object);
 			})
 			.fail(function() {
-				d.v.lockComm = false;
+				window.comm.lock = false;
 
 				if(fail) fail();
 			})
 			.always(function() {
-				d.v.lockComm = false;
+				window.comm.lock = false;
 
 				if(always) always();
 			});
 		}
 	};
 
-	d.t.post = function(url, data, done, fail, always) {
-		if(!d.v.lockComm) {
-			d.v.lockComm = true;
-
-			return $.post({
-				url: url,
-				data: data,
-			})
-			.done(function(object) {
-				d.v.lockComm = false;
-
-				if(done) done(object);
-			})
-			.fail(function() {
-				d.v.lockComm = false;
-
-				if(fail) fail();
-			})
-			.always(function() {
-				d.v.lockComm = false;
-
-				if(always) always();
-			});
-		}
+	window.comm.get = function(url, data, done, fail, always) {
+		return window.comm.request('GET', url, data, done, fail, always);
+	};
+	window.comm.post = function(url, data, done, fail, always) {
+		return window.comm.request('POST', url, data, done, fail, always);
 	};
 })();
