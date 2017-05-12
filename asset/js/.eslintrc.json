@@ -39,6 +39,7 @@
 
 		"app": true,
 		"Vue": true,
-		"reqwest": true
+		"reqwest": true,
+		"io": true
 	}
 }

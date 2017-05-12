@@ -20,6 +20,8 @@ module.exports = ($, router) => {
 
 	$.st($.pa('asset'));
 
+	$.io($.rq('io'));
+
 	router.get('/up', async(ctx, next) => {
 		await next();
 
