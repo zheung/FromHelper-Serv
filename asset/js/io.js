@@ -10,12 +10,12 @@
 	};
 
 	on('mod', function() {
-		app.pageTurn(d.v.pager.record.now);
+		app.pageTurn(app.pageNow);
 	});
-	on('list', function(obj) {
-		app.recos = obj.records;
-
-		d.t.pagerDeal(obj.now, obj.max, d.v.pager['record']);
+	on('list', function(result) {
+		app.recos = result.records;
+		app.pageNow = result.now;
+		app.pageMax = result.max;
 	});
 })();
 

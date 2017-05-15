@@ -61,10 +61,13 @@ a:visited {
 
 .Main {
 	height: 100%;
+	width: 100%;
+
+	flex: 1
 }
 .Navi {
-	width: 450px;
 	height: 100%;
+	width: 450px;
 
 	overflow-x: hidden;
 	overflow-y: auto;

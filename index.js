@@ -105,7 +105,7 @@ module.exports = ($, router) => {
 	router.get('/', async(ctx, next) => {
 		await next();
 
-		ctx.body = fs.readFileSync($.pa('asset/html/index.html')).toString();
+		ctx.body = fs.readFileSync($.pa('asset/html/index.html'));
 	});
 
 	router.get('/ls', async(ctx, next) => {

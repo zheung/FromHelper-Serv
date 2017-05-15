@@ -4,7 +4,7 @@ module.exports = ($) => {
 			list: (page) => {
 				let len = $.dict.arr.length, start = (page - 1) * 20, end = page*20, max = Math.ceil(len / 20);
 
-				emit('list', { s:true, now: end>len ? 0 : page, max: max, records: $.dict.arr.slice(start, end) });
+				emit('list', { s:true, now: end>len+20 ? 0 : page, max: max, records: $.dict.arr.slice(start, end) });
 			},
 			mod: (record) => {
 				let now = record,

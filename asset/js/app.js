@@ -2,88 +2,66 @@ window.app = new Vue({
 	el: '#app',
 	data: {
 		io:io(),
-		recos: []
+		recos: [],
+
+		pageNow: 1,
+		pageMax: 1,
+
+		tab: {
+			dash: 1,
+			type: 1
+		},
+
+		recoEmpty: { name: '' },
+
+		recoNow: {
+			name: '',
+			domn: [ '' ],
+			info: [{
+				name: '',
+				info: [
+					{ type: 0, name: '帐号', data: '' },
+					{ type: 1, name: '密码', data: '' }
+				]
+			}],
+			elem: [{ type: 0, selc: [] }]
+		},
+
+		disp: {
+			domnDel: false,
+			infoDel: [],
+
+			recoOver: []
+		},
+
+		infoType: ['文本', '密码', '复选'],
+		inputType: ['text', 'password', 'checkbox'],
+		elemType: ['静态', '动态']
 	},
 	methods: {
 		pageTurn: function(page) {
-			this.io.emit('af-list', (typeof page == 'number' && page ? page : 1));
+			if(page > 0 && page <= this.pageMax)
+				this.io.emit('af-list', (typeof page == 'number' && page ? page : 1));
 		},
 		mains: function(reco) {
 			var mains = {};
 
 			reco.info.map(function(info) {
+				var first = true;
 				info.info.map(function(inf) {
-					if(inf.type == 0) mains[inf.data] = true;
+					if(inf.type == 0 && first) {
+						mains[inf.data] = true;
+
+						first = false;
+					}
 				});
 			});
 
 			return Object.keys(mains).join('; ');
 		},
-		editRecord: function(record) {
-			d.e.IName.val(record.name);
-
-			$('.iDomain').remove();
-			record.domn.map(function(domain) {
-				d.e.AddItemDomain.click();
-				$('.iDomain:last>input').val(domain);
-			});
-
-			$('.iInfoGroup').remove();
-			record.info.map(function(infoGroup) {
-				d.e.AddGroupInfo.click();
-
-				var group = $('.iInfoGroup:last'), addItem = group.find('.AddItem.Info');
-
-				group.find('.iInfo').remove();
-
-				group.find('input:first').val(infoGroup.name);
-
-				infoGroup.info.map(function(info) {
-					addItem.click();
-
-					var iInfo = group.find('.iInfo:last');
-
-					iInfo.find('input:first').val(info.name);
-
-					if(info.type != 0) {
-						var iInfoType = iInfo.find('a');
-
-						if(info.type>0) {
-							iInfoType.click();
-
-							if(info.type>1) iInfoType.click();
-						}
-					}
-
-					if(info.type != 2)
-						iInfo.find('input:last').val(info.data);
-					else
-						iInfo.find('input:last').prop('checked', info.data);
-				});
-			});
-
-			$('.iElemGroup').remove();
-			record.elem.map(function(elemGroup) {
-				d.e.AddGroupElem.click();
-
-				var group = $('.iElemGroup:last'), addItem = group.find('.AddItem.Elem');
-
-				group.find('.iElem').remove();
-
-				group.find('input:first').val(elemGroup.name);
-
-				if(elemGroup.type == 1)
-					group.find('.elemType').click();
-
-				elemGroup.selc.map(function(elem) {
-					addItem.click();
-
-					group.find('.iElem:last>input').val(elem);
-				});
-
-			});
-
-			d.v.recordNow = record;
+		editRecord: function(reco) {
+			this.disp.infoDel = [];
+			this.recoNow = reco;
 		},
 		saveRecord: function() {
 			var record = d.v.recordNow;
@@ -127,6 +105,21 @@ window.app = new Vue({
 			if(checkResult) return alert(checkResult);
 
 			app.emit('mod', record);
+		},
+		swier: function(group, now) {
+			return group.length-1 == now ? 0 : now+1;
+		},
+		newInfo: function() {
+			return {
+				name: '',
+				info: [
+					{ type: 0, name: '帐号', data: '' },
+					{ type: 1, name: '密码', data: '' }
+				]
+			};
+		},
+		newElem: function() {
+			return { type: 0, selc: [] };
 		}
 	}
 });

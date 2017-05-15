@@ -19,47 +19,51 @@
 		<div id="app" class="Frame clrFont flex drr wpn jcs aic wpn">
 			<div class="Main blrBack flex drc jcc aic wpn">
 				<div class="Records flex drr jca aic aca wpw">
-					<div class="Record flex drr jcs ais acc wpw" v-for="reco in recos" @click="editRecord(reco)">
+					<div class="Record flex drr jcs ais acc wpw" v-for="(reco, i) of recos"
+						@click="editRecord(reco)"
+						@mouseover="Vue.set(disp.recoOver, i, true)"
+						@mouseout="Vue.set(disp.recoOver, i, false)"
+					>
 						<div class="Detail flex drr jcs aic acc">
 							<div class="Icon flex jcc aic acc"><i class="fa fa-address-card-o"></i></div>
 							<span class="Show sName">{{reco.name}}</span>
 							<div class="Icon flex jcc aic acc">
-								<a class="fa fa-link sLink" target="_blank" :href="'http://'+reco.domn[0]"></a>
+								<a class="fa fa-link sLink" target="_blank" :href="'http://'+reco.domn[0]" @click.stop></a>
 							</div>
 						</div>
 						<div class="Detail flex drr jcs aic acc">
 							<div class="Icon flex jcc aic acc"><i class="fa fa-user-o"></i></div>
-							<span class="Show sMain">{{mains(reco)}}</span>
-							<div class="Icon flex jcc aic acc"><a class="EditRecord fa fa-pencil curp hide" target="_blank"></a></div>
+							<span class="Show sMain" v-once>{{mains(reco)}}</span>
+							<div class="Icon flex jcc aic acc" v-if="disp.recoOver[i]"><a class="EditRecord fa fa-pencil curp" target="_blank"></a></div>
 						</div>
 						<div class="Detail flex drr jcs aic acc">
 							<div class="Icon flex jcc aic acc"><i class="fa fa-unlock-alt"></i></div>
 							<span class="Show sPass">**************</span>
-							<div class="Icon flex jcc aic acc"><a class="fa fa-trash-o curp hide" target="_blank"></a></div>
+							<div class="Icon flex jcc aic acc" v-if="disp.recoOver[i]"><a class="fa fa-trash-o curp" target="_blank"></a></div>
 						</div>
 					</div>
 				</div>
 				<div class="Pager flex jcb aic">
-					<a id="RecordPrev" class="PagerPrev flex jcc aic">上一页</a>
+					<a id="RecordPrev" class="PagerPrev flex jcc aic" @click="pageTurn(pageNow-1)">上一页</a>
 					<div class="PagerCount flex jcc aic">
-						第<input id="RecordPage" class="Page" type="text"></input>/&nbsp;<span id="RecordPageMax"></span>&nbsp;页
+						第<input id="RecordPage" class="Page" type="text" v-model="pageNow" @keyup.enter="pageTurn"></input>/&nbsp;<span id="RecordPageMax">{{pageMax}}</span>&nbsp;页
 					</div>
-					<a id="RecordNext" class="PagerNext flex jcc aic">下一页</a>
+					<a id="RecordNext" class="PagerNext flex jcc aic" @click="pageTurn(pageNow+1)">下一页</a>
 				</div>
 			</div>
 			<div class="Navi blrNavi">
 				<div class="TabHeader RightNavi flex jca aih wpn">
-					<a class="TabHead RightNavi active flex jcc aic" data-taber-page="Basic">表单</a>
-					<a class="TabHead RightNavi flex jcc aic" data-taber-page="Config" data-notab>配置</a>
-					<a class="TabHead RightNavi flex jcc aic" data-taber-page="About" data-notab>关于</a>
+					<a class="TabHead RightNavi flex jcc aic" @click="tab.dash=1" v-bind:class="{ active: tab.dash==1 }">表单</a>
+					<a class="TabHead RightNavi flex jcc aic" @click="tab.dash=2" v-bind:class="{ active: tab.dash==2 }">配置</a>
+					<a class="TabHead RightNavi flex jcc aic" @click="tab.dash=3" v-bind:class="{ active: tab.dash==3 }">关于</a>
 				</div>
-				<div class="TabItem RightNavi flex drc aic jcs wpn" data-taber-page="Basic">
+				<div class="TabItem RightNavi flex drc aic jcs wpn" v-if="tab.dash==1">
 					<div class="NaviColumn flex jcb aic wpn">
 						<a class="w4 Button Click" data-z="32">主域名</a>
 						<div class="CondBar2 flex jca aic wpw">
 							<input id="CondName" class="wf Input" type="text" placeholder="关键词"/>
 						</div>
-						<a id="Search" class="w4 Button Click">搜索</a>
+						<a id="Search" class="w4 Button Click" @click="pageTurn">搜索</a>
 					</div>
 					<div class="NaviColumn flex jcb aic wpw">
 						<div>
@@ -74,13 +78,13 @@
 
 					<div class="NaviColumn flex jcb aic wpw">
 						<div class="TabHeader RightNavi2 flex jca aih wpn">
-							<a class="TabHead RightNavi2 flex jcc aic" data-taber-page="Basic">基本</a>
-							<a class="TabHead RightNavi2 flex jcc aic" data-taber-page="Info">信息</a>
-							<a class="TabHead RightNavi2 flex jcc aic" data-taber-page="Elem">元素</a>
-							<a class="TabHead RightNavi2 flex jcc aic" data-taber-page="Rule">规则</a>
+							<a class="TabHead RightNavi2 flex jcc aic" @click="tab.type=1" v-bind:class="{ active: tab.type==1 }">基本</a>
+							<a class="TabHead RightNavi2 flex jcc aic" @click="tab.type=2" v-bind:class="{ active: tab.type==2 }">信息</a>
+							<a class="TabHead RightNavi2 flex jcc aic" @click="tab.type=3" v-bind:class="{ active: tab.type==3 }">元素</a>
+							<a class="TabHead RightNavi2 flex jcc aic" @click="tab.type=4" v-bind:class="{ active: tab.type==4 }">规则</a>
 						</div>
 					</div>
-					<div class="TabItem RightNavi2 fs14 flex drr jcc ais acs wpw" data-taber-page="Basic">
+					<div class="TabItem RightNavi2 fs14 flex drr jcc ais acs wpw" v-if="tab.type==1">
 						<div class="NaviColumn flex jcc aic wpw">
 							<div class="NaviItem Head flex drr jcb aic">
 								<div class="NaviDetail flex drr jcb aic">
@@ -92,7 +96,7 @@
 							</div>
 							<div class="NaviItem flex drc jcc aic">
 								<div class=" NaviDetail flex drr jca aic">
-									<input class="iName" type="text" placeholder="条目名称"></input>
+									<input class="iName" type="text" placeholder="条目名称" v-model="recoNow.name"></input>
 								</div>
 							</div>
 						</div>
@@ -104,108 +108,91 @@
 										<span>主域名</span>
 									</div>
 									<div>
-										<i class="AddItem Domain curp fa fa-plus" data-add-class="iDomain"></i>&nbsp;
-										<i class="DelItems Domain curp fa fa-minus"></i>&nbsp;
+										<i class="AddItem Domain curp fa fa-plus" @click="recoNow.domn.push('')"></i>&nbsp;
+										<i class="DelItems Domain curp fa fa-minus" @click="disp.domnDel = !disp.domnDel"></i>&nbsp;
 									</div>
 								</div>
 							</div>
 							<div class="NaviItem flex drc jcc aic">
-								<div class="NaviDetail flex drr jca aic hide">
-									<input type="text" placeholder="一级域名"></input>
-									<i class="DelItem curp fa fa-minus hide"></i>
-								</div>
-								<div class="NaviDetail flex drr jca aic iDomain">
-									<input type="text" placeholder="一级域名"></input>
-									<i class="DelItem curp fa fa-minus hide"></i>
+								<div class="NaviDetail flex drr jca aic" v-for="(domn, i) of recoNow.domn">
+									<input type="text" placeholder="一级域名" v-model="recoNow.domn[i]"></input>
+									<i class="DelItem curp fa fa-minus" v-if="disp.domnDel" @click="recoNow.domn.splice(i, 1)"></i>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="TabItem RightNavi2 fs14 flex drr jcc ais acs wpw" data-taber-page="Info">
-						<div class="NaviColumn flex jcc aic wpw hide">
+					<div class="TabItem RightNavi2 fs14 flex drr jcc ais acs wpw" v-if="tab.type==2">
+						<div class="NaviColumn flex jcc aic wpw" v-for="(infoGroup, i) of recoNow.info">
 							<div class="NaviItem Head flex drr jcb aic">
 								<div class="NaviDetail flex drr jcb aic">
 									<div>
 										<i class="fa fa-address-card-o"></i>
-										<input type="text" placeholder="信息组标题"></input>
+										<input type="text" placeholder="信息组标题" v-model="infoGroup.name"></input>
 									</div>
 									<div>
-										<i class="AddItem Info curp fa fa-plus" data-add-class="iInfo"></i>&nbsp;
-										<i class="DelItems Info curp fa fa-minus"></i>&nbsp;
-										<i class="DelGroup Info curp fa fa-trash-o"></i>
+										<i class="AddItem Info curp fa fa-plus" @click="infoGroup.info.push({ type: 0, name: '', data: '' })"></i>&nbsp;
+										<i class="DelItems Info curp fa fa-minus" @click="Vue.set(disp.infoDel, i, !disp.infoDel[i])"></i>&nbsp;
+										<i class="DelGroup Info curp fa fa-trash-o" @click="recoNow.info.splice(i, 1)"></i>
 									</div>
 								</div>
 							</div>
 							<div class="NaviItem flex drc jcc aic">
-								<div class="NaviDetail flex drr jca aic hide">
-									<a class="Button Click InfoType"></a>
-									<input type="text" placeholder="信息名"></input>
-									<input type="text" placeholder="信息"></input>
-									<i class="DelItem curp fa fa-minus hide"></i>
-								</div>
-								<div class="NaviDetail flex drr jca aic iInfo">
-									<a class="Button Click InfoType"></a>
-									<input type="text" placeholder="信息名" value="帐号"></input>
-									<input type="text" placeholder="信息"></input>
-									<i class="DelItem curp fa fa-minus hide"></i>
-								</div>
-								<div class="NaviDetail flex drr jca aic iInfo">
-									<a class="Button Click InfoType" data-swier-now="1"></a>
-									<input type="text" placeholder="信息名" value="密码"></input>
-									<input type="text" placeholder="信息"></input>
-									<i class="DelItem curp fa fa-minus hide"></i>
+								<div class="NaviDetail flex drr jca aic" v-for="(info, j) of infoGroup.info">
+									<a class="Button Click InfoType" @click="info.type = swier(infoType, info.type)">{{infoType[info.type]}}</a>
+									<input type="text" placeholder="信息名" v-model="info.name"></input>
+
+									<input type="text" placeholder="信息" v-model="info.data" v-if="info.type==0"></input>
+									<input type="password" placeholder="信息" v-model="info.data" v-if="info.type==1"></input>
+									<input type="checkbox" placeholder="信息" v-model="info.data" v-if="info.type==2"></input>
+									<i class="DelItem curp fa fa-minus" v-if="disp.infoDel[i]" @click="infoGroup.info.splice(j, 1)"></i>
 								</div>
 							</div>
 						</div>
 						<div class="NaviColumn flex jcc aic wpw">
-							<a class="Button AddGroup Info flex jcc aic" data-add-class="iInfoGroup"><i class="fa fa-plus"></i></a>
+							<a class="Button AddGroup Info flex jcc aic" @click="recoNow.info.push(newInfo())">
+								<i class="fa fa-plus"></i>
+							</a>
 						</div>
 					</div>
-					<div class="TabItem RightNavi2 fs14 flex drr jcc ais acs wpw" data-taber-page="Elem">
-						<div class="NaviColumn flex jcc aic wpw hide">
+					<div class="TabItem RightNavi2 fs14 flex drr jcc ais acs wpw" v-if="tab.type==3">
+						<div class="NaviColumn flex jcc aic wpw" v-for="elemGroup of recoNow.elem">
 							<div class="NaviItem Head flex drr jcb aic">
 								<div class="NaviDetail flex drr jcb aic">
 									<div>
 										<i class="fa fa-address-card-o"></i>
-										<input type="text" placeholder="元素组标题"></input>
+										<input type="text" placeholder="元素组标题" v-model="elemGroup.name"></input>
 									</div>
 									<div>
 										<i class="AddItem Elem curp fa fa-plus" data-add-class="iElem"></i>&nbsp;
-										<i class="DelItems Elem curp fa fa-minus"></i>&nbsp;
-										<i class="DelGroup Elem curp fa fa-trash-o"></i>
+										<i class="DelItems Elem curp fa fa-minus" @click="disp.elemDel = !disp.elemDel"></i>&nbsp;
+										<i class="DelGroup Elem curp fa fa-trash-o" @click="recoNow.elem.splice(i, 1)"></i>
 									</div>
 								</div>
 							</div>
 							<div class="NaviItem flex drc jcc aic">
-								<div class="NaviDetail flex drr jca aic hide">
-									<input type="text" placeholder="选择器"></input>
-									<i class="DelItem curp fa fa-minus hide"></i>
-								</div>
 								<div class="NaviDetail flex drr jca aic iElemType">
 									<span>元素类型</span>
-									<a class="Button Click ElemType"></a>
+									<a class="Button Click ElemType" @click="elemGroup.type = swier(elemType, elemGroup.type)">{{elemType[elemGroup.type]}}</a>
 								</div>
-								<div class="NaviDetail flex drr jca aic iElem">
-									<input type="text" placeholder="选择器"></input>
-									<i class="DelItem curp fa fa-minus hide"></i>
-								</div>
-								<div class="NaviDetail flex drr jca aic iElem">
-									<input type="text" placeholder="选择器"></input>
-									<i class="DelItem ELem curp fa fa-minus hide"></i>
+								<div class="NaviDetail flex drr jca aic iElem" v-for="(elem, i) of elemGroup.selc">
+									<input type="text" placeholder="选择器" v-model="elemGroup.selc[i]"></input>
+									<i class="DelItem curp fa fa-minus"></i>
 								</div>
 							</div>
 						</div>
 						<div class="NaviColumn flex jcc aic wpw">
-							<a class="Button AddGroup Elem flex jcc aic" data-add-class="iElemGroup"><i class="fa fa-plus"></i></a>
+							<a class="Button AddGroup Elem flex jcc aic" data-add-class="iElemGroup" @click="recoNow.info.push(newElem())">
+								<i class="fa fa-plus"></i>
+							</a>
 						</div>
 					</div>
-					<div class="TabItem RightNavi2 fs11 flex drc jcb aic wpw" data-taber-page="Rule">
+					<div class="TabItem RightNavi2 fs11 flex drc jcb aic wpw" v-if="tab.type==4">
 						4
 					</div>
 				</div>
-				<div class="TabItem RightNavi clrFontDark flex drc jcs aic wpn" data-taber-page="Config">
+				<div class="TabItem RightNavi clrFontDark flex drc jcs aic wpn" v-if="tab.dash==2">
 				</div>
-				<div class="TabItem RightNavi flex drr jcc aic wpn" data-taber-page="About">
+				<div class="TabItem RightNavi flex drr jcc aic wpn" v-if="tab.dash==3">
 					<div class="TabItem RightNavi2 clrFontDark fs20 flex drc jcb aic wpw">
 						<div>
 							<span class="fs24 fsb clrFont">A</span>ufoll.js&nbsp;
@@ -232,26 +219,10 @@
 			</div>
 		</div>
 
-
-		<script type="text/javascript">window.d = { v: {}, e: {}, t: {}, f:{} };</script>
-
-		<script type="text/javascript" src="af/js/reqwest.min.js"></script>
-		<script type="text/javascript" src="af/js/tool/comm.js"></script>
-
-		<script type="text/javascript" src="af/js/vue.min.js"></script>
-		<script type="text/javascript" src="af/js/socket.io.js"></script>
+		<script type="text/javascript" src="pub/js/vue.min.js"></script>
+		<script type="text/javascript" src="pub/js/socket.io.js"></script>
 
 		<script type="text/javascript" src="af/js/app.js"></script>
 		<script type="text/javascript" src="af/js/io.js"></script>
-
-		<script type="text/javascript" src="pub/js/jquery.js"></script>
-		<script type="text/javascript" src="af/js/pre.js"></script>
-		<script type="text/javascript" src="af/js/tool/pager.js"></script>
-		<script type="text/javascript" src="af/js/tool/taber.js"></script>
-		<script type="text/javascript" src="af/js/tool/swier.js"></script>
-		<script type="text/javascript" src="af/js/tool/hover.js"></script>
-		<script type="text/javascript" src="af/js/tool/uider.js"></script>
-		<script type="text/javascript" src="af/js/func.js"></script>
-		<script type="text/javascript" src="af/js/init.js"></script>
 	</body>
 </html>
