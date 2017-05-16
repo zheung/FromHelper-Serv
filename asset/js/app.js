@@ -14,7 +14,7 @@ window.app = new Vue({
 
 		recoEmpty: { name: '' },
 
-		recoNow: {
+		recoEdit: {
 			name: '',
 			domn: [ '' ],
 			info: [{
@@ -66,12 +66,20 @@ window.app = new Vue({
 			this.disp.elemDel = [];
 
 			this.recoNow = reco;
+			this.recoEdit = JSON.parse(JSON.stringify(reco));
 		},
 		saveRecord: function() {
-			var checkResult = this.checkRecord(this.recoNow);
+			var checkResult = this.checkRecord(this.recoEdit);
 			if(checkResult) return alert(checkResult);
 
-			app.emit('mod', this.recoNow);
+			app.emit('mod', this.recoEdit);
+		},
+		resetRecord: function() {
+			this.disp.domnDel = [];
+			this.disp.infoDel = [];
+			this.disp.elemDel = [];
+
+			this.recoEdit = JSON.parse(JSON.stringify(this.recoNow));
 		},
 		swier: function(group, now) {
 			return group.length-1 == now ? 0 : now+1;

@@ -70,7 +70,7 @@
 						</div>
 						<div>
 							<a class="Save Button Serv"><i class="fa fa-save" @click="saveRecord"></i></a>
-							<a class="Reset Button Serv"><i class="fa fa-undo"></i></a>
+							<a class="Reset Button Serv"><i class="fa fa-undo" @click="resetRecord"></i></a>
 							<a class="Delete Button Serv"><i class="fa fa-trash-o"></i></a>
 						</div>
 					</div>
@@ -95,7 +95,7 @@
 							</div>
 							<div class="NaviItem flex drc jcc aic">
 								<div class=" NaviDetail flex drr jca aic">
-									<input class="iName" type="text" placeholder="条目名称" v-model="recoNow.name"></input>
+									<input class="iName" type="text" placeholder="条目名称" v-model="recoEdit.name"></input>
 								</div>
 							</div>
 						</div>
@@ -107,25 +107,24 @@
 										<span>主域名</span>
 									</div>
 									<div>
-										<i class="AddItem Domain curp fa fa-plus" @click="recoNow.domn.push('')"></i>&nbsp;
-										<!--<i class="DelItems Domain curp fa fa-minus" @click="disp.domnDel = !disp.domnDel"></i>&nbsp;-->
+										<i class="AddItem Domain curp fa fa-plus" @click="recoEdit.domn.push('')"></i>&nbsp;
 									</div>
 								</div>
 							</div>
 							<div class="NaviItem flex drc jcc aic">
 								<div class="NaviDetail flex drr jca aic"
-									v-for="(domn, i) of recoNow.domn"
+									v-for="(domn, i) of recoEdit.domn"
 									@mouseover="Vue.set(disp.domnDel, i, true)"
 									@mouseout="Vue.set(disp.domnDel, i, false)"
 								>
-									<input type="text" placeholder="一级域名" v-model="recoNow.domn[i]"></input>
-									<i class="DelItem curp fa fa-trash-o" v-show="disp.domnDel[i]" @click="recoNow.domn.splice(i, 1); disp.domnDel.splice(0)"></i>
+									<input type="text" placeholder="一级域名" v-model="recoEdit.domn[i]"></input>
+									<i class="DelItem curp fa fa-trash-o" v-show="disp.domnDel[i]" @click="recoEdit.domn.splice(i, 1); disp.domnDel.splice(0)"></i>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="TabItem RightNavi2 fs14 flex drr jcc ais acs wpw" v-if="tab.type==2">
-						<div class="NaviColumn flex jcc aic wpw" v-for="(infoGroup, i) of recoNow.info">
+						<div class="NaviColumn flex jcc aic wpw" v-for="(infoGroup, i) of recoEdit.info">
 							<div class="NaviItem Head flex drr jcb aic">
 								<div class="NaviDetail flex drr jcb aic">
 									<div>
@@ -134,7 +133,7 @@
 									</div>
 									<div>
 										<i class="AddItem Info curp fa fa-plus" @click="infoGroup.info.push({ type: 0, name: '', data: '' })"></i>&nbsp;
-										<i class="DelGroup Info curp fa fa-trash-o" @click="recoNow.info.splice(i, 1); disp.infoDel.splice(0)"></i>
+										<i class="DelGroup Info curp fa fa-trash-o" @click="recoEdit.info.splice(i, 1); disp.infoDel.splice(0)"></i>
 									</div>
 								</div>
 							</div>
@@ -154,13 +153,13 @@
 							</div>
 						</div>
 						<div class="NaviColumn flex jcc aic wpw">
-							<a class="Button AddGroup Info flex jcc aic" @click="recoNow.info.push(newInfo())">
+							<a class="Button AddGroup Info flex jcc aic" @click="recoEdit.info.push(newInfo())">
 								<i class="fa fa-plus"></i>
 							</a>
 						</div>
 					</div>
 					<div class="TabItem RightNavi2 fs14 flex drr jcc ais acs wpw" v-if="tab.type==3">
-						<div class="NaviColumn flex jcc aic wpw" v-for="(elemGroup, i) of recoNow.elem">
+						<div class="NaviColumn flex jcc aic wpw" v-for="(elemGroup, i) of recoEdit.elem">
 							<div class="NaviItem Head flex drr jcb aic">
 								<div class="NaviDetail flex drr jcb aic">
 									<div>
@@ -169,7 +168,7 @@
 									</div>
 									<div>
 										<i class="AddItem Elem curp fa fa-plus" @click="elemGroup.selc.push('')"></i>&nbsp;
-										<i class="DelGroup Elem curp fa fa-trash-o" @click="recoNow.elem.splice(i, 1); disp.elemDel.splice(0)"></i>
+										<i class="DelGroup Elem curp fa fa-trash-o" @click="recoEdit.elem.splice(i, 1); disp.elemDel.splice(0)"></i>
 									</div>
 								</div>
 							</div>
@@ -188,7 +187,7 @@
 							</div>
 						</div>
 						<div class="NaviColumn flex jcc aic wpw">
-							<a class="Button AddGroup Elem flex jcc aic" @click="recoNow.elem.push(newElem())">
+							<a class="Button AddGroup Elem flex jcc aic" @click="recoEdit.elem.push(newElem())">
 								<i class="fa fa-plus"></i>
 							</a>
 						</div>
