@@ -6,7 +6,7 @@
 
 		args[0] = 'af-'+args[0];
 
-		app.io.emit.apply(this, args);
+		app.io.emit.apply(app.io, args);
 	};
 
 	on('mod', function() {

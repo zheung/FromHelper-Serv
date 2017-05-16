@@ -24,7 +24,7 @@ window.app = new Vue({
 					{ type: 1, name: '密码', data: '' }
 				]
 			}],
-			elem: [{ type: 0, selc: [] }]
+			elem: [{ type: 0, selc: [''] }]
 		},
 
 		disp: {
@@ -40,13 +40,9 @@ window.app = new Vue({
 		elemType: ['静态', '动态']
 	},
 	methods: {
-		// toggleDel: function(e, bool) {
-		// 	e.currentTarget
-		// 	debugger;
-		// },
 		pageTurn: function(page) {
 			if(page > 0 && page <= this.pageMax)
-				this.io.emit('af-list', (typeof page == 'number' && page ? page : 1));
+				app.emit('list', (typeof page == 'number' && page ? page : 1));
 		},
 		mains: function(reco) {
 			var mains = {};
@@ -65,54 +61,24 @@ window.app = new Vue({
 			return Object.keys(mains).join('; ');
 		},
 		editRecord: function(reco) {
+			this.disp.domnDel = [];
 			this.disp.infoDel = [];
+			this.disp.elemDel = [];
+
 			this.recoNow = reco;
 		},
 		saveRecord: function() {
-			var record = d.v.recordNow;
-
-			record.name = d.e.IName.val();
-			record.domn = [];
-
-			$('.iDomain>input').map(function() {
-				var domn = $(this).val();
-
-				if(domn) record.domn.push(domn);
-			});
-
-			record.info = [];
-
-			$('.iInfoGroup').map(function() {
-				var iGroup = $(this), group = {
-					name: iGroup.find('input:first').val(),
-					info: []
-				};
-
-				iGroup.find('.iInfo').map(function() {
-					var iInfo = $(this), info = {
-						type: iInfo.find('a').data('swierNow'),
-						name: iInfo.find('input:first').val(),
-					};
-
-					if(info.type != 2)
-						info.data = iInfo.find('input:last').val();
-					else
-						info.data = iInfo.find('input:last').prop('checked');
-
-					group.info.push(info);
-				});
-
-				record.info.push(group);
-			});
-
-
-			var checkResult = d.f.checkRecord(record);
+			var checkResult = this.checkRecord(this.recoNow);
 			if(checkResult) return alert(checkResult);
 
-			app.emit('mod', record);
+			app.emit('mod', this.recoNow);
 		},
 		swier: function(group, now) {
 			return group.length-1 == now ? 0 : now+1;
+		},
+		checkRecord: function(record) {
+			if(!record.domn || !record.domn.length)
+				return '主域名不能为空';
 		},
 		newInfo: function() {
 			return {
@@ -124,7 +90,7 @@ window.app = new Vue({
 			};
 		},
 		newElem: function() {
-			return { type: 0, selc: [] };
+			return { type: 0, selc: [''] };
 		}
 	}
 });
