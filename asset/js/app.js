@@ -28,8 +28,9 @@ window.app = new Vue({
 		},
 
 		disp: {
-			domnDel: false,
+			domnDel: [],
 			infoDel: [],
+			elemDel: [],
 
 			recoOver: []
 		},
@@ -39,6 +40,10 @@ window.app = new Vue({
 		elemType: ['静态', '动态']
 	},
 	methods: {
+		// toggleDel: function(e, bool) {
+		// 	e.currentTarget
+		// 	debugger;
+		// },
 		pageTurn: function(page) {
 			if(page > 0 && page <= this.pageMax)
 				this.io.emit('af-list', (typeof page == 'number' && page ? page : 1));
