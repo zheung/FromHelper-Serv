@@ -1,4 +1,4 @@
-let transDict = (raw) => {
+let transDict = async(raw) => {
 	let dict = { arr: [], idx: {}, ids: {} };
 
 	for(let r of raw) {
@@ -15,8 +15,8 @@ let transDict = (raw) => {
 	return dict;
 };
 
-module.exports = ($) => {
-	global.upDict = (cbYeah, cbNope) => {
+module.exports = async($) => {
+	global.upDict = async(cbYeah, cbNope) => {
 		let raw, type, path;
 
 		for(let pathRaw of $.conf.pathDict)
@@ -24,7 +24,7 @@ module.exports = ($) => {
 				[type, path] = pathRaw.split(':');
 
 				if(type == 'i')
-					raw = $.rq(path, true);
+					raw = await $.rq(path, true);
 				else if(type == 'o') {
 					delete require.cache[require.resolve(path)];
 
@@ -36,7 +36,7 @@ module.exports = ($) => {
 			catch(e) { continue; }
 
 		if(raw) {
-			$.dict = transDict(raw);
+			$.dict = await transDict(raw);
 
 			return cbYeah ? cbYeah() : 'yeah';
 		}
@@ -44,5 +44,5 @@ module.exports = ($) => {
 			return cbNope ? cbNope() : 'nope';
 	};
 
-	global.upDict();
+	await global.upDict();
 };

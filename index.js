@@ -1,26 +1,26 @@
-let isIP = (host) => {
-		let match = host.match(/\d+/g);
+let isIP = async (host) => {
+	let match = host.match(/\d+/g);
 
-		if(
-			match &&
-			(match.length == 4 || match.length == 5) &&
-			(1 < ~~match[0] && ~~match[0] < 255) &&
-			(0 < ~~match[1] && ~~match[1] < 255) &&
-			(0 < ~~match[2] && ~~match[2] < 255) &&
-			(0 < ~~match[3] && ~~match[3] < 255) &&
-			(!match[4] || (1 < ~~match[4] && ~~match[4] < 65535))
-		)
-			return true;
+	if(
+		match &&
+		(match.length == 4 || match.length == 5) &&
+		(1 < ~~match[0] && ~~match[0] < 255) &&
+		(0 < ~~match[1] && ~~match[1] < 255) &&
+		(0 < ~~match[2] && ~~match[2] < 255) &&
+		(0 < ~~match[3] && ~~match[3] < 255) &&
+		(!match[4] || (1 < ~~match[4] && ~~match[4] < 65535))
+	)
+		return true;
 
-		return false;
-	};
+	return false;
+};
 
-module.exports = ($, router) => {
-	$.rq('init');
+module.exports = async($, router) => {
+	await $.rq('init');
 
-	$.st($.pa('asset'));
+	await $.st(await $.pa('asset'));
 
-	$.io($.rq('io'));
+	await $.io(await $.rq('io'));
 
 	router.get('/up', async(ctx, next) => {
 		await next();
@@ -43,7 +43,7 @@ module.exports = ($, router) => {
 		else if(query.d) {
 			let url = URL.parse(new Buffer(query.d, 'base64').toString(), true);
 
-			if(isIP(url.host)) {
+			if(await isIP(url.host)) {
 				let record = $.dict.idx[url.host];
 
 				if(record) {
@@ -105,7 +105,7 @@ module.exports = ($, router) => {
 	router.get('/', async(ctx, next) => {
 		await next();
 
-		ctx.body = fs.readFileSync($.pa('asset/html/index.html')).toString();
+		ctx.body = fs.readFileSync(await $.pa('asset/html/index.html')).toString();
 	});
 
 	router.get('/ls', async(ctx, next) => {
@@ -141,7 +141,7 @@ module.exports = ($, router) => {
 
 		$.dict.arr.splice(idx, 1, now);
 
-		fs.writeFileSync($.pa('aufoll.json'), JSON.stringify($.dict.arr, null, '\t'));
+		fs.writeFileSync(await $.pa('aufoll.json'), JSON.stringify($.dict.arr, null, '\t'));
 
 		ctx.body = { s:true };
 	});
