@@ -20,7 +20,7 @@ module.exports = ($) => {
 					let oldDomain = $.dict.idx[d];
 
 					if(oldDomain) {
-						_l('warn: '+oldDomain+' has duplicate item');
+						L('warn: '+oldDomain+' has duplicate item');
 					}
 
 					$.dict.idx[d] = now;

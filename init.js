@@ -6,7 +6,7 @@ let transDict = async(raw) => {
 			if(!dict.idx[m])
 				dict.idx[m] = r;
 			else
-				_l('warn: '+m+' has duplicate item');
+				L('warn: '+m+' has duplicate item');
 
 		dict.ids[r.id] = r;
 		dict.arr.push(r);
